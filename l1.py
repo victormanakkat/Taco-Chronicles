@@ -1,6 +1,5 @@
 #Creating the level 1 class
 #By Tyler Spadgenske
-print 'Loading...'
 import pygame, sys
 from pygame.locals import *
 
@@ -15,118 +14,110 @@ from person import Person
 from powerups import Powerups
 from baddieAI import AI
 
-pygame.init()
+class L1(object):
+    def __init__(self, windowSurface, mainClock, SKY_BLUE):
+        
+        #Variables
+        self.windowSurface = windowSurface
+        self.clock = mainClock
+        self.SKY_BLUE = SKY_BLUE
+        self.moveRight = False
+        self.moveLeft = False
+        self.currentWeapon = '9mm'
+        self.currentTool = 'crowbar'
+        self.dropDownGun = False
+        self.dropDownTool = False
+        self.lockedGuns = {'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True, 'flamethrower':True}
+        self.lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
+        self.score = 0
+        self.ammo = 15
+        self.hit = False
+        self.gunButtonCoords = [695, 30, 735, 30, 715, 50]
+        self.toolButtonCoords = [395, 30, 435, 30, 415, 50]
+        self.officerX = 1500
+        self.officerGunX = {'right':abs(self.officerX) + 45, 'left':self.officerX + 7}
+        self.takeStep = 0
+        self.direction = 1
+        self.goUp = None
+        self.shootBullet = False
+        self.message = 'This is the Message Box.'
+        self.skill_level = 800
+        self.centered = False
+        self.drop = False
+        self.sound = True
+        self.paused = False
 
-WINDOWWIDTH = 1200
-WINDOWHIEGHT = 600
-windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
-pygame.display.set_caption('Creating the Level 1 class (Version 0.0.1)')
-mainClock = pygame.time.Clock()
+        #Initialize Objects
+        self.level_1 = Level_1(self.windowSurface)
+        self.tools = Toolbar(self.lockedGuns, self.windowSurface)
+        self.gunMenu = selectGunMenu(self.lockedGuns)
+        self.toolMenu = selectToolMenu(self.lockedTools)
+        self.gunArrowButton = Button(self.windowSurface)
+        self.toolArrowButton = Button(self.windowSurface)
+        self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
+        self.ammoBoxes = Powerups(self.windowSurface, self.score)
+        self.ammoBoxCoords = [600, 490]
+        self.cop1 = AI(self.windowSurface, self.skill_level, self.officerX)
+        
+    def play(self):
+        while True:
+            self.rectList = [self.ammoBoxCoords, self.cop1.get_rect(), self.cop1.get_gun_rect()]
+            self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.centered)
+            self.officerGunX = {'right':self.rectList[1][0] + 45, 'left':self.rectList[1][0] + 7}
+            for event in pygame.event.get():
+                self.sound, self.paused = self.tools.addButtons(self.sound, event)
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_RIGHT:
+                        self.direction = 1
+                        self.moveRight = True 
+                        self.moveLeft = False
+                    if event.key == K_LEFT:
+                        self.direction = 0
+                        self.moveLeft = True
+                        self.moveRight = False
+                    if event.key == K_UP:
+                        self.goUp = True
+                    if event.key == K_SPACE:
+                        self.shootBullet = True
+                if event.type == KEYUP:
+                    self.moveRight = False
+                    self.moveLeft = False
+                    self.shootBullet = False
 
-BLUE = (0,0,255)
-SKY_BLUE = (0, 255, 255)
-
-windowSurface.fill(SKY_BLUE)
-
-#Variables
-moveRight = False
-moveLeft = False
-currentWeapon = '9mm'
-currentTool = 'crowbar'
-dropDownGun = False
-dropDownTool = False
-lockedGuns = {'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True, 'flamethrower':True}
-lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
-score = 0
-ammo = 15
-hit = False
-gunButtonCoords = [695, 30, 735, 30, 715, 50]
-toolButtonCoords = [395, 30, 435, 30, 415, 50]
-officerX = 1500
-officerGunX = {'right':abs(officerX) + 45, 'left':officerX + 7}
-takeStep = 0
-direction = 1
-goUp = None
-shootBullet = False
-message = 'This is the Message Box.'
-skill_level = 800
-centered = False
-drop = False
-sound = True
-paused = False
-
-#Objects
-level_1 = Level_1(windowSurface)
-toolBar = Toolbar(lockedGuns, windowSurface)
-gunMenu = selectGunMenu(lockedGuns)
-toolMenu = selectToolMenu(lockedTools)
-gunArrowButton = Button(windowSurface)
-toolArrowButton = Button(windowSurface)
-DrTaco = Person('Doctor Taco', windowSurface, officerX, officerGunX)
-ammoBoxes = Powerups(windowSurface, score)
-ammoBoxCoords = [600, 490]
-cop = AI(windowSurface, skill_level, officerX)
-
-print 'Loading Complete'
-while True:
-    rectList = [ammoBoxCoords, cop.get_rect(), cop.get_gun_rect()]
-    rectList = level_1.blitBackground(moveRight, moveLeft, rectList, centered)
-    officerGunX = {'right':rectList[1][0] + 45, 'left':rectList[1][0] + 7}
-    for event in pygame.event.get():
-        sound, paused = toolBar.addButtons(sound, event)
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
-                direction = 1
-                moveRight = True 
-                moveLeft = False
-            if event.key == K_LEFT:
-                direction = 0
-                moveLeft = True
-                moveRight = False
-            if event.key == K_UP:
-                goUp = True
-            if event.key == K_SPACE:
-                shootBullet = True
-        if event.type == KEYUP:
-            moveRight = False
-            moveLeft = False
-            shootBullet = False
-
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        dropDownGun = gunArrowButton.arrow(dropDownGun, event, gunButtonCoords)
-        dropDownTool = toolArrowButton.arrow(dropDownTool, event, toolButtonCoords)
-        if dropDownGun:
-            currentWeapon = gunMenu.selectGunButton(currentWeapon, event)
-        if dropDownTool:
-            currentTool = toolMenu.selectToolButton(currentTool, event)
+                self.dropDownGun = self.gunArrowButton.arrow(self.dropDownGun, event, self.gunButtonCoords)
+                self.dropDownTool = self.toolArrowButton.arrow(self.dropDownTool, event, self.toolButtonCoords)
+                if self.dropDownGun:
+                    self.currentWeapon = self.gunMenu.selectGunButton(self.currentWeapon, event)
+                if self.dropDownTool:
+                    self.currentTool = self.toolMenu.selectToolButton(self.currentTool, event)
             
-    toolBar.display()
+            self.tools.display()
     
-    toolBar.messageBox(message)
-    toolBar.countScore(score)
-    toolBar.countAmmo(ammo, currentWeapon)
-    sound, paused = toolBar.addButtons(sound, None)
-    hit = toolBar.health(hit)
+            self.tools.messageBox(self.message)
+            self.tools.countScore(self.score)
+            self.tools.countAmmo(self.ammo, self.currentWeapon)
+            self.sound, self.paused = self.tools.addButtons(self.sound, None)
+            self.hit = self.tools.health(self.hit)
     
-    dropDownGun, currentWeapon = gunMenu.chooseGun(windowSurface, dropDownGun, currentWeapon)
-    dropDownTool, currentTool = toolMenu.chooseTool(windowSurface, dropDownTool, currentTool)    
-    gunArrowButton.blitArrow(windowSurface, dropDownGun, gunButtonCoords)
-    toolArrowButton.blitArrow(windowSurface, dropDownTool, toolButtonCoords)
+            self.dropDownGun, self.currentWeapon = self.gunMenu.chooseGun(self.windowSurface, self.dropDownGun, self.currentWeapon)
+            self.dropDownTool, self.currentTool = self.toolMenu.chooseTool(self.windowSurface, self.dropDownTool, self.currentTool)    
+            self.gunArrowButton.blitArrow(self.windowSurface, self.dropDownGun, self.gunButtonCoords)
+            self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
 
-    if paused != True:
-        takeStep, centered = DrTaco.walk(takeStep, direction, moveLeft, moveRight, officerX)
-        goUp = DrTaco.jump(goUp)
-        shootBullet, hit, ammo, message, score, officerX, drop = DrTaco.shootPistol(shootBullet, hit, direction, officerGunX, sound, cop.get_rect(), ammo, message, score)
+            if self.paused != True:
+                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX)
+                self.goUp = self.DrTaco.jump(self.goUp)
+                self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop = self.DrTaco.shootPistol(
+                    self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
 
-        score, ammo = ammoBoxes.ammoBox(ammoBoxCoords[0], ammoBoxCoords[1], DrTaco.get_rect(), ammo, score, sound)
+                self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
+                                                                self.ammo, self.score, self.sound)
 
-        hit = cop.think(DrTaco.get_rect(), cop.get_rect()[0], officerGunX, drop, hit, sound)
+                self.hit = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit, self.sound)
     
-    pygame.display.update()
-    mainClock.tick()
-    windowSurface.fill(SKY_BLUE)
+            pygame.display.update()
+            self.clock.tick()
+            self.windowSurface.fill(self.SKY_BLUE)
