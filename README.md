@@ -1,4 +1,4 @@
-Taco-Chronicles
+Taco Chronicles
 ===============
 
 Goal <br />
@@ -8,7 +8,7 @@ the bigger and better weapons you receive! And then eat Taco's to unlock even mo
 
 About PYWARE <br />
 PYWARE is a Python Software making group run by Tyler Spadgenske. The Taco Chronicles is the groups'
-first big program, but many more are to come. Click here to go to their website.
+first big program, but many more are to come. 
 
 Development <br />
 The Taco Chronicles development is run by PYWARE, and is currently moving along smoothly. The game will
