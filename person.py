@@ -276,6 +276,11 @@ weapons, and shoots bullets on command.
                 i[0] -= 10
             else:
                 i[0] += 10
+        #If bullets go off screen remove them from list.
+        for bullet in self.bullets:
+            if bullet[0] > 1200 or bullet[0] < 0:
+                self.bullets.remove(bullet)
+                
             self.bulletNum += 1
             self.num += 1
         self.bulletNum = 0
