@@ -1,9 +1,7 @@
 # main.py
 # By Tyler Spadgenske
 VERSION = '0.1.0'
-#Creating the level 1 class
-#By Tyler Spadgenske
-print 'Loading...'
+
 import pygame, sys
 from pygame.locals import *
 
@@ -18,7 +16,9 @@ from person import Person
 from powerups import Powerups
 from baddieAI import AI
 from l1 import L1
+from intro import Intro
 
+#Setup the main screen display and clock
 pygame.init()
 
 WINDOWWIDTH = 1200
@@ -27,10 +27,28 @@ windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
 pygame.display.set_caption('Creating the Level 1 class v' + VERSION)
 mainClock = pygame.time.Clock()
 
+#Setup Colors
 BLUE = (0,0,255)
 SKY_BLUE = (0, 255, 255)
 
 windowSurface.fill(SKY_BLUE)
 
-level1 = L1(windowSurface, mainClock, SKY_BLUE)
-level1.play()
+#Setup game data
+lockedGuns = {'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True, 'flamethrower':True}
+lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
+sound = True
+gameData = {'sound':sound, 'lockedGuns':lockedGuns, 'lockedTools':lockedTools}
+restart = True
+
+l1List = []
+Intro(windowSurface)
+for i in range(0, 19):
+    l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData))
+
+
+#Run the gameplay
+for i in l1List:
+    restart = i.play()
+    if restart == False:
+        break
+
