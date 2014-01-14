@@ -2,7 +2,7 @@
 #By Tyler Spadgenske
 import pygame, sys
 from pygame.locals import *
-
+from popups import Popups
 pygame.init()
 
 class Person(object): #Create the Person class
@@ -28,7 +28,7 @@ weapons, and shoots bullets on command.
         self.countJump = 0
         self.location = [{'right':130, 'left':72},{'right':officerGunX['right'], 'left':officerGunX['left']}]
         self.centered = False
-
+        
         #Some Colors
         self.WHITE = (0, 255, 255)
         self.BLACK = (0, 0, 0)
@@ -121,10 +121,14 @@ weapons, and shoots bullets on command.
         self.hitBullet = -1
         self.wound = 0
         self.drop = False
+        self.reload = False
+        self.back = False
 
         #Setup sound
         self.gunshot = pygame.mixer.Sound('sound\\gunshot.wav')
         self.gunclick = pygame.mixer.Sound('sound\\gunclick.wav')
+
+        self.gameOver = Popups(self.windowSurface)
         
     def get_rect(self):
         if self.character == 'Doctor Taco':
@@ -166,7 +170,7 @@ weapons, and shoots bullets on command.
                 if self.character == 'officer':
                     if self.wound == self.SHOTS_TILL_TACOS_DEATH:
                         if self.character == 'officer':
-                            print 'Your dead!'
+                            self.reload, self.back = self.gameOver.endgame() ############################################
                         self.wound = -100
                         self.drop = True
 
@@ -286,6 +290,6 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
         
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop           
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop      
 
 #Total of 270 lines
