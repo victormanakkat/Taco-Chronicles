@@ -134,4 +134,4 @@ class Toolbar(Button):
                 sound = True
                 self.soundIcon = 'sound on'
 
-        return sound, self.paused
+        return sound, self.paused, self.reload
