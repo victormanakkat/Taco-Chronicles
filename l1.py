@@ -15,7 +15,13 @@ from powerups import Powerups
 from baddieAI import AI
 
 class L1(object):
-    def __init__(self, windowSurface, mainClock, SKY_BLUE):
+    def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
+
+        #Create game data
+        self.lockedGuns = gameData['lockedGuns']
+        self.lockedTools = gameData['lockedTools']
+        self.sound = gameData['sound']
+        self.runGame = True
         
         #Variables
         self.windowSurface = windowSurface
@@ -27,8 +33,6 @@ class L1(object):
         self.currentTool = 'crowbar'
         self.dropDownGun = False
         self.dropDownTool = False
-        self.lockedGuns = {'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True, 'flamethrower':True}
-        self.lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
         self.score = 0
         self.ammo = 15
         self.hit = False
@@ -44,8 +48,8 @@ class L1(object):
         self.skill_level = 800
         self.centered = False
         self.drop = False
-        self.sound = True
         self.paused = False
+        self.reload = False
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -58,14 +62,15 @@ class L1(object):
         self.ammoBoxes = Powerups(self.windowSurface, self.score)
         self.ammoBoxCoords = [600, 490]
         self.cop1 = AI(self.windowSurface, self.skill_level, self.officerX)
-        
+
     def play(self):
-        while True:
+        while self.runGame == True:
+            self.reload = False
             self.rectList = [self.ammoBoxCoords, self.cop1.get_rect(), self.cop1.get_gun_rect()]
             self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.centered)
             self.officerGunX = {'right':self.rectList[1][0] + 45, 'left':self.rectList[1][0] + 7}
             for event in pygame.event.get():
-                self.sound, self.paused = self.tools.addButtons(self.sound, event)
+                self.sound, self.paused, self.reload = self.tools.addButtons(self.sound, event)
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
@@ -99,7 +104,7 @@ class L1(object):
             self.tools.messageBox(self.message)
             self.tools.countScore(self.score)
             self.tools.countAmmo(self.ammo, self.currentWeapon)
-            self.sound, self.paused = self.tools.addButtons(self.sound, None)
+            self.sound, self.paused, self.reaload = self.tools.addButtons(self.sound, None)
             self.hit = self.tools.health(self.hit)
     
             self.dropDownGun, self.currentWeapon = self.gunMenu.chooseGun(self.windowSurface, self.dropDownGun, self.currentWeapon)
@@ -121,3 +126,10 @@ class L1(object):
             pygame.display.update()
             self.clock.tick()
             self.windowSurface.fill(self.SKY_BLUE)
+            if self.reload == True:
+                self.runGame = False
+            print self.reload
+
+        return self.reload
+
+
