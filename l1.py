@@ -50,6 +50,10 @@ class L1(object):
         self.drop = False
         self.paused = False
         self.reload = False
+        self.endReload = False
+        self.endBack = False
+        self.die = False
+        self.val = None
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -115,20 +119,22 @@ class L1(object):
             if self.paused != True:
                 self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX)
                 self.goUp = self.DrTaco.jump(self.goUp)
-                self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop = self.DrTaco.shootPistol(
+                self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
                     self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
+                
+                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit, self.sound)
 
-                self.hit = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit, self.sound)
-    
             pygame.display.update()
             self.clock.tick()
             self.windowSurface.fill(self.SKY_BLUE)
-            if self.reload == True:
+            if self.endReload:
                 self.runGame = False
-            print self.reload
+                self.reload = True
+            if self.reload:
+                self.runGame = False
 
         return self.reload
 
