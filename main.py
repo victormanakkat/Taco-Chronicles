@@ -24,7 +24,7 @@ pygame.init()
 WINDOWWIDTH = 1200
 WINDOWHIEGHT = 600
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
-pygame.display.set_caption('Creating the Level 1 class v' + VERSION)
+pygame.display.set_caption('The Taco Chronicles v' + VERSION)
 mainClock = pygame.time.Clock()
 
 #Setup Colors
