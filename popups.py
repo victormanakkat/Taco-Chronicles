@@ -52,8 +52,6 @@ class Popups(object, Button):
             self.window.blit(self.tacoImageBIG, self.tacoRect)
             self.window.blit(self.text, self.textRect)
             for event in pygame.event.get():
-                if event.type == QUIT:
-                    self.back = True
                 self.reload = self.buttons.roundButton( event, 'reload', self.location)
                 self.back = self.buttons.roundButton( event, 'back', self.backLocation)
 
