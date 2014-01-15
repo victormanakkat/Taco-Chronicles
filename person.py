@@ -2,8 +2,9 @@
 #By Tyler Spadgenske
 import pygame, sys
 from pygame.locals import *
-from popups import Popups
 pygame.init()
+
+from popups import Popups
 
 class Person(object): #Create the Person class
     '''
@@ -28,7 +29,8 @@ weapons, and shoots bullets on command.
         self.countJump = 0
         self.location = [{'right':130, 'left':72},{'right':officerGunX['right'], 'left':officerGunX['left']}]
         self.centered = False
-        
+
+        self.endgame = Popups(windowSurface)
         #Some Colors
         self.WHITE = (0, 255, 255)
         self.BLACK = (0, 0, 0)
@@ -123,22 +125,24 @@ weapons, and shoots bullets on command.
         self.drop = False
         self.reload = False
         self.back = False
+        self.die = False
 
         #Setup sound
         self.gunshot = pygame.mixer.Sound('sound\\gunshot.wav')
         self.gunclick = pygame.mixer.Sound('sound\\gunclick.wav')
 
-        self.gameOver = Popups(self.windowSurface)
-        
+    #This function returns the characters rect
     def get_rect(self):
         if self.character == 'Doctor Taco':
             return self.rect
         if self.character == 'officer':
             return self.officerRect
 
+    #This function returns the characters gun rect
     def get_gun_rect(self):
         return self.gunRect
 
+    #This function moves Dr. Taco at the beginning of the game to center screen
     def move(self, rect, walkingRect, location):
         centered = False
         if rect[0] < 600:
@@ -169,12 +173,14 @@ weapons, and shoots bullets on command.
 
                 if self.character == 'officer':
                     if self.wound == self.SHOTS_TILL_TACOS_DEATH:
+                        #If Dr. Taco is dead, end game
                         if self.character == 'officer':
-                            self.reload, self.back = self.gameOver.endgame() ############################################
+                            self.endgame.endgame()
+                            self.die = True
                         self.wound = -100
                         self.drop = True
-
-        return score, message, hit
+                        
+        return score, message, hit, self.drop
 
     def burned():
         pass
@@ -200,7 +206,7 @@ weapons, and shoots bullets on command.
                 self.rect, self.rect2, self.location, self.centered = self.move(self.rect, self.rect2, self.location)
              if self.character == 'officer':
                  self.windowSurface.blit(self.officerWalkingImages[direction], self.officerRect2)
-                 
+        
         return self.takeStep, self.centered #Return takeStep so it knows what position it is in.
         
     def jump(self, goUp): #Draws character jumping up and going down.
@@ -269,9 +275,9 @@ weapons, and shoots bullets on command.
                     self.gunshot.play()
                 
         if self.character == 'Doctor Taco':
-            score, self.message, hit = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
+            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
         if self.character == 'officer':
-            score, self.message, hit = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
+            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
                 
         for i in self.bullets:
             pygame.draw.rect(self.windowSurface, self.BLACK, i)
@@ -283,13 +289,14 @@ weapons, and shoots bullets on command.
         #If bullets go off screen remove them from list.
         for bullet in self.bullets:
             if bullet[0] > 1200 or bullet[0] < 0:
-                self.bullets.remove(bullet)
+                self.bullets.pop()
+                self.bulletDirection.pop()
                 
             self.bulletNum += 1
             self.num += 1
         self.bulletNum = 0
         self.num = 0
-        
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop      
+
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
 
 #Total of 270 lines
