@@ -29,6 +29,8 @@ and another boolean the determins if it should play sound.'''
         self.time = 0
         self.character = 'officer'
         self.centered = False
+        self.reload = False
+        self.back = False
         super(AI, self).__init__(self.character, windowSurface, abs(self.baddieX), self.baddieGunX)
 
     def get_rect(self):
@@ -83,9 +85,9 @@ and another boolean the determins if it should play sound.'''
                         self.shoot = True
       
             self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, baddieX) 
-            self.shoot, hit, ammo, message, score, officerX, drop = super(AI, self).shootPistol(self.shoot, hit, self.direction, baddieGunX, sound, x)
+            self.shoot, hit, ammo, message, score, officerX, drop, self.reload = super(AI, self).shootPistol(self.shoot, hit, self.direction, baddieGunX, sound, x)
 
         if self.time == 30:
             self.time = 0
 
-        return hit
+        return hit, self.reload
