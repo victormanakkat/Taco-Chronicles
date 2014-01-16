@@ -93,7 +93,7 @@ This class is only used inside the Toolbar() class
         self.shotgunTextRect[1] = 50
 
         #Initialize AK-47 images and text
-        self.AK47Image2 = pygame.image.load('Weapons\\AK-47Right.gif')
+        self.AK47Image2 = pygame.image.load('Weapons\\AK-47.gif')
         self.AK47Image = pygame.transform.scale(self.AK47Image2, (90, 90))
         self.AK47Rect = self.AK47Image.get_rect()
         self.AK47Rect[0] = 615
