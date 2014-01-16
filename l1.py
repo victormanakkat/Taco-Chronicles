@@ -22,14 +22,16 @@ class L1(object):
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
         self.runGame = True
-        
+
+        #Constants
+        self.BPS = 8 #(Bullets Per Second)
         #Variables
         self.windowSurface = windowSurface
         self.clock = mainClock
         self.SKY_BLUE = SKY_BLUE
         self.moveRight = False
         self.moveLeft = False
-        self.currentWeapon = '9mm'
+        self.currentWeapon = 'AK-47'
         self.currentTool = 'crowbar'
         self.dropDownGun = False
         self.dropDownTool = False
@@ -54,6 +56,7 @@ class L1(object):
         self.endBack = False
         self.die = False
         self.val = None
+        self.rapidFire = [0, False]
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -91,10 +94,12 @@ class L1(object):
                         self.goUp = True
                     if event.key == K_SPACE:
                         self.shootBullet = True
+                        self.rapidFire[1] = True
                 if event.type == KEYUP:
                     self.moveRight = False
                     self.moveLeft = False
                     self.shootBullet = False
+                    self.rapidFire[1] = False
 
                 self.dropDownGun = self.gunArrowButton.arrow(self.dropDownGun, event, self.gunButtonCoords)
                 self.dropDownTool = self.toolArrowButton.arrow(self.dropDownTool, event, self.toolButtonCoords)
@@ -102,6 +107,12 @@ class L1(object):
                     self.currentWeapon = self.gunMenu.selectGunButton(self.currentWeapon, event)
                 if self.dropDownTool:
                     self.currentTool = self.toolMenu.selectToolButton(self.currentTool, event)
+
+            self.rapidFire[0] += 1
+            if self.rapidFire[0] == self.BPS:
+                self.rapidFire[0] = 0
+                if self.rapidFire[1]:
+                    self.shootBullet = True
             
             self.tools.display()
     
@@ -117,10 +128,17 @@ class L1(object):
             self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
 
             if self.paused != True:
-                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX)
+                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX, self.currentWeapon)
                 self.goUp = self.DrTaco.jump(self.goUp)
-                self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
-                    self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                if self.currentWeapon == '9mm':
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                if self.currentWeapon == 'shotgun':
+                    pass
+                if self.currentWeapon == 'AK-47':
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                    self.shootBullet = False
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
@@ -137,5 +155,4 @@ class L1(object):
                 self.runGame = False
 
         return self.reload
-
 
