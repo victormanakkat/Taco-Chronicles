@@ -31,7 +31,7 @@ class L1(object):
         self.SKY_BLUE = SKY_BLUE
         self.moveRight = False
         self.moveLeft = False
-        self.currentWeapon = 'AK-47'
+        self.currentWeapon = '9mm'
         self.currentTool = 'crowbar'
         self.dropDownGun = False
         self.dropDownTool = False
@@ -112,7 +112,8 @@ class L1(object):
             if self.rapidFire[0] == self.BPS:
                 self.rapidFire[0] = 0
                 if self.rapidFire[1]:
-                    self.shootBullet = True
+                    if self.currentWeapon == 'AK-47':
+                        self.shootBullet = True
             
             self.tools.display()
     
@@ -134,7 +135,8 @@ class L1(object):
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
                 if self.currentWeapon == 'shotgun':
-                    pass
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
                 if self.currentWeapon == 'AK-47':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
