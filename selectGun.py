@@ -80,7 +80,7 @@ This class is only used inside the Toolbar() class
         self.text9mmRect[1] = 50
 
         #Initialize Shotgun images and text
-        self.ShotgunImage = pygame.image.load('Weapons\\shotgunRight.gif')
+        self.ShotgunImage = pygame.image.load('Weapons\\shotgun.gif')
         self.shotgunImage = pygame.transform.scale(self.ShotgunImage, (90, 90))
         self.shotgunRect = self.shotgunImage.get_rect()
         self.shotgunRect[0] = 615
