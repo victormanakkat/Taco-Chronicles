@@ -59,11 +59,11 @@ weapons, and shoots bullets on command.
         self.DrTacoWalkRight = pygame.transform.scale(self.tacoImage2, (80, 110))
         
         #Initialize Dr. Taco walking left image
-        self.tacoWalkLeftImage = pygame.image.load('Characters\\DrTacoWalkLeft.gif')
+        self.tacoWalkLeftImage = pygame.transform.flip(self.DrTacoWalkRight, True, False)
         self.DrTacoWalkLeft = pygame.transform.scale(self.tacoWalkLeftImage, (80, 110))
 
         #Initialize Dr. Taco standing left image
-        self.tacoLeftImage = pygame.image.load('Characters\\DrTacoLeft.gif')
+        self.tacoLeftImage = pygame.transform.flip(self.DrTacoRight, True, False)
         self.DrTacoLeft = pygame.transform.scale(self.tacoLeftImage, (80, 110))
 
         self.DrTacoStandingImages = [self.DrTacoLeft, self.DrTacoRight]
@@ -89,11 +89,11 @@ weapons, and shoots bullets on command.
         self.officerWalkRight = pygame.transform.scale(self.officerImage2, (70, 100))
         
         #Initialize officer walking left image
-        self.officerWalkLeftImage = pygame.image.load('Characters\\officerWalkLeft.gif')
+        self.officerWalkLeftImage = pygame.transform.flip(self.officerWalkRight, True, False)
         self.officerWalkLeft = pygame.transform.scale(self.officerWalkLeftImage, (70, 100))
 
         #Initialize officer standing left image
-        self.officerLeftImage = pygame.image.load('Characters\\officerLeft.gif')
+        self.officerLeftImage = pygame.transform.flip(self.officerRight, True, False)
         self.officerLeft = pygame.transform.scale(self.officerLeftImage, (70, 100))
 
         self.officerStandingImages = [self.officerLeft, self.officerRight]
@@ -104,8 +104,7 @@ weapons, and shoots bullets on command.
         self.right9mmImage = pygame.image.load('Weapons\\9mmRight.gif')
         self.right9mm = pygame.transform.scale(self.right9mmImage, (20, 15))
 
-        self.left9mmImage = pygame.image.load('Weapons\\9mmLeft.gif')
-        self.left9mm = pygame.transform.scale(self.left9mmImage, (20, 15))
+        self.left9mm = pygame.transform.flip(self.right9mm, True, False)
 
         #Setup 9mm rect        
         self.gunRect = self.right9mmImage.get_rect()
