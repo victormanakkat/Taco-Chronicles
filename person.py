@@ -28,7 +28,7 @@ weapons, and shoots bullets on command.
         self.takeStep = False
         self.countJump = 0
         self.location = {'9mm':[{'right':130, 'left':72},{'right':officerGunX['right'], 'left':officerGunX['left']}], 'AK-47':[{'right':117, 'left':50}], 'shotgun':
-                         [{'right':117, 'left':10}]}
+                         [{'right':117, 'left':10}],'bazooka': [{'right':100, 'left':40}]}
         self.centered = False
 
         self.endgame = Popups(windowSurface)
@@ -133,7 +133,19 @@ weapons, and shoots bullets on command.
         self.shotgunRect = self.rightShotgunimage.get_rect()
         self.shotgunRect.centerx = self.rect.centerx + 170
         self.shotgunRect.centery = self.rect.centery + 15
-        
+
+        #Initialize bazooka image and rect
+        self.rightBazookaImage = pygame.image.load('Weapons\\bazooka.gif')
+        self.bazookaRight = pygame.transform.scale(self.rightBazookaImage, (90, 40))
+
+        self.bazookaLeft = pygame.transform.flip(self.bazookaRight, True, False)
+       
+        self.bazookaRect = self.rightBazookaImage.get_rect()
+        self.bazookaRect.centery = self.rect.centery - 25
+
+        #Create rocket image
+        self.rocketRight = pygame.image.load('Weapons\\rocket.png')
+        self.rocketLeft = pygame.transform.flip(self.rocketRight, True, False)            
 
         #Setup the bullets
         self.bullets = []
@@ -151,6 +163,7 @@ weapons, and shoots bullets on command.
         #Setup sound
         self.gunshot = pygame.mixer.Sound('sound\\gunshot.wav')
         self.gunclick = pygame.mixer.Sound('sound\\gunclick.wav')
+        self.whoosh = pygame.mixer.Sound('sound\\rocket.wav')
 
     #This function returns the characters rect
     def get_rect(self):
@@ -174,7 +187,7 @@ weapons, and shoots bullets on command.
         else: centered = True
         return rect, walkingRect, location, centered
 
-    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit):
+    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit, weapon = ''):
         #If person is still alive continue on
         if self.drop == False:
             #If class is run by Doctor Taco continue on
@@ -184,6 +197,8 @@ weapons, and shoots bullets on command.
                     if every_bullet.colliderect(target_rect):
                         bulletList.pop()
                         bulletDirList.pop()
+                        if weapon == 'bazooka':
+                            self.wound += self.SHOTS_TILL_COPS_DEATH - 1
                         self.wound += 1
                         if self.character == 'officer':
                             hit = True
@@ -248,6 +263,7 @@ weapons, and shoots bullets on command.
             self.gunRect[1] -= self.JUMP_SPEED
             self.AKgunRect[1] -= self.JUMP_SPEED
             self.shotgunRect[1] -= self.JUMP_SPEED
+            self.bazookaRect[1] -= self.JUMP_SPEED
         elif goUp == False:
             if self.character == 'Doctor Taco':
                 self.rect[1] += self.JUMP_SPEED
@@ -259,6 +275,7 @@ weapons, and shoots bullets on command.
             self.gunRect[1] += self.JUMP_SPEED
             self.AKgunRect[1] += self.JUMP_SPEED
             self.shotgunRect[1] += self.JUMP_SPEED
+            self.bazookaRect[1] += self.JUMP_SPEED
         if self.countJump == 0:
             goUp = None
         return goUp
@@ -442,6 +459,71 @@ weapons, and shoots bullets on command.
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
             pygame.draw.rect(self.windowSurface, self.BLACK, i)
+        for i in self.bullets:
+            if self.bulletDirection[self.bulletNum] == 0:
+                i[0] -= 10
+            else:
+                i[0] += 10
+                
+        #If bullets go off screen remove them from list.
+        for bullet in self.bullets:
+            if bullet[0] > 1200 or bullet[0] < 0:
+                self.bullets.pop()
+                self.bulletDirection.pop()
+                
+            self.bulletNum += 1
+            self.num += 1
+        self.bulletNum = 0
+        self.num = 0
+
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
+
+    def shootBazooka(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, weapon = ''):
+        #Get message box value and setup the cops location
+        self.message = message
+        #If person is facing right set coordinates and blit gun to screen
+        if direction == 1:
+            if self.character == 'Doctor Taco':
+                self.bazookaRect[0] = self.location['bazooka'][0]['right']
+            self.windowSurface.blit(self.bazookaRight, self.bazookaRect)
+            
+        #If person is facing left set coordinates and blit gun to screen
+        if direction == 0:
+            if self.character == 'Doctor Taco':
+                self.bazookaRect[0] = self.location['bazooka'][0]['left']
+            self.windowSurface.blit(self.bazookaLeft, self.bazookaRect)
+            
+        #If gun is fired add a bullet to the bullet list with its direction. Then, subtract one from ammoLeft
+        if shootBullet == True:
+            if ammoLeft > 0:
+                self.bullets.append(pygame.Rect(self.bazookaRect[0] + 40, self.bazookaRect[1] + 10, 4, 4))
+                self.bulletDirection.append(direction)
+                shootBullet = False
+                ammoLeft -= 1
+                #If the sound is on stop previous sound and play the gun shot
+                if sound:
+                    self.whoosh.play()
+            # If your out of ammo, play a click and change the message
+            if ammoLeft <= 0:
+                if sound:
+                    self.gunclick.stop()
+                    self.gunclick.play()
+                self.message = 'No Ammo Left!'
+            else:
+                self.gunclick.stop()
+
+        #If run self.shot() to move bullets and determin whether the person is dead
+        if self.character == 'Doctor Taco':
+            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, weapon)
+
+        # for every bullet in the bullet list blit it and move it in the correct direction
+        for rect in self.bullets:
+            if self.bulletDirection[self.num] == 1:
+                self.windowSurface.blit(self.rocketRight, rect)
+            else:
+                self.windowSurface.blit(self.rocketLeft, rect)
+            self.num += 1
+        self.num = 0
         for i in self.bullets:
             if self.bulletDirection[self.bulletNum] == 0:
                 i[0] -= 10

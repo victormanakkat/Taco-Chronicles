@@ -106,7 +106,7 @@ This class is only used inside the Toolbar() class
         self.AK47TextRect[1] = 50
 
         #Initialize Bazooka Images and text
-        self.bazookaImage2 = pygame.image.load('Weapons\\bazookaRight.gif')
+        self.bazookaImage2 = pygame.image.load('Weapons\\bazooka.gif')
         self.bazookaImage = pygame.transform.scale(self.bazookaImage2, (90, 40))
         self.bazookaRect = self.bazookaImage.get_rect()
         self.bazookaRect[0] = 615
