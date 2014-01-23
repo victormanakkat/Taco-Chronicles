@@ -43,9 +43,7 @@ class L1(object):
         self.officerX = 1500
         self.officerGunX = {'right':abs(self.officerX) + 45, 'left':self.officerX + 7}
         self.takeStep = 0
-        self.direction = 1
         self.goUp = None
-        self.shootBullet = False
         self.message = 'This is the Message Box.'
         self.skill_level = 800
         self.centered = False
@@ -57,6 +55,13 @@ class L1(object):
         self.die = False
         self.val = None
         self.rapidFire = [0, False]
+
+        self.gunData = {'shootBullet':False, 'hit':False,'direction':1,
+                        'sound':gameData['sound'],'ammoLeft':15,'message':'This is the Message Box.', 'score':0}
+        
+        self.officerGunData = {'shootBullet':False, 'hit':False,'direction':1,'gunX':{'right':abs(self.officerX) + 45, 'left':self.officerX + 7},
+                        'sound':gameData['sound'],'ammoLeft':15,'message':'', 'score':0}
+
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -83,22 +88,22 @@ class L1(object):
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_RIGHT:
-                        self.direction = 1
+                        self.gunData['direction'] = 1
                         self.moveRight = True 
                         self.moveLeft = False
                     if event.key == K_LEFT:
-                        self.direction = 0
+                        self.gunData['direction'] = 0
                         self.moveLeft = True
                         self.moveRight = False
                     if event.key == K_UP:
                         self.goUp = True
                     if event.key == K_SPACE:
-                        self.shootBullet = True
+                        self.gunData['shootBullet'] = True
                         self.rapidFire[1] = True
                 if event.type == KEYUP:
                     self.moveRight = False
                     self.moveLeft = False
-                    self.shootBullet = False
+                    self.gunData['shootBullet'] = False
                     self.rapidFire[1] = False
 
                 self.dropDownGun = self.gunArrowButton.arrow(self.dropDownGun, event, self.gunButtonCoords)
@@ -113,7 +118,7 @@ class L1(object):
                 self.rapidFire[0] = 0
                 if self.rapidFire[1]:
                     if self.currentWeapon == 'AK-47':
-                        self.shootBullet = True
+                        self.gunData['shootBullet'] = True
             
             self.tools.display()
     
@@ -128,28 +133,36 @@ class L1(object):
             self.gunArrowButton.blitArrow(self.windowSurface, self.dropDownGun, self.gunButtonCoords)
             self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
 
+            #Setup gunData values
+            self.hit = self.gunData['hit']
+            self.sound = self.gunData['sound'] 
+            self.ammo = self.gunData['ammoLeft'] 
+            self.message = self.gunData['message'] 
+            self.score = self.gunData['score']
+            
             if self.paused != True:
-                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX, self.currentWeapon)
+                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.gunData['direction'], self.moveLeft, self.moveRight, self.officerX, self.currentWeapon)
                 self.goUp = self.DrTaco.jump(self.goUp)
                 if self.currentWeapon == '9mm':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                    self.gunData, self.drop, self.die = self.DrTaco.shootPistol(self.gunData, self.cop1.get_rect())
+                        
                 if self.currentWeapon == 'shotgun':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                    self.gunData['shootBullet'], self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
+                        self.gunData['shootBullet'], self.hit, self.gunData['direction'], self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
                 if self.currentWeapon == 'AK-47':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
-                    self.shootBullet = False
+                    self.gunData['shootBullet'], self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
+                        self.gunData['shootBullet'], self.hit, self.gunData['direction'], self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                    self.gunData['shootBullet'] = False
                 if self.currentWeapon == 'bazooka':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootBazooka(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
+                    self.gunData['shootBullet'], self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootBazooka(
+                        self.gunData['shootBullet'], self.hit, self.gunData['direction'], self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
                         self.currentWeapon)
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
                 
-                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit, self.sound)
+                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit,
+                                                           self.gunData['sound'], self.officerGunData)
 
             pygame.display.update()
             self.clock.tick()
