@@ -24,14 +24,15 @@ and another boolean the determins if it should play sound.'''
         self.takeStep = False
         self.direction = 0
         self.baddieX = officerX
-        self.baddieGunX = {'right':abs(officerX) + 45, 'left':officerX + 7}
+        self.baddieGunX = {'right':abs(self.baddieX) + 45, 'left':self.baddieX + 7}
+        self.shoot = False
         self.time = 0
         self.character = 'officer'
         self.centered = False
         self.reload = False
         self.back = False
         super(AI, self).__init__(self.character, windowSurface, abs(self.baddieX), self.baddieGunX)
-        
+
     def get_rect(self):
         return super(AI, self).get_rect()
     
@@ -49,10 +50,7 @@ and another boolean the determins if it should play sound.'''
             baddieGunX['left'] += 2
         return baddieX, baddieGunX['right'], baddieGunX['left']
     
-    def think(self,  x, baddieX, baddieGunX, dead, hit, sound, gunData):
-        gunData['direction'] = self.direction
-        print 'A: ',gunData['gunX']
-        gunData['gunX'] = self.baddieGunX
+    def think(self,  x, baddieX, baddieGunX, dead, hit, sound):
         if dead == False:
             self.time += 1
             #Deside whether to walk forward or shoot left
@@ -61,7 +59,7 @@ and another boolean the determins if it should play sound.'''
                     self.direction = 0
                     self.walkLeft = True
                     self.walkRight = False
-                    baddieX, gunData['gunX']['right'], gunData['gunX']['left'] = self.move(baddieX, gunData['gunX'])
+                    baddieX, baddieGunX['right'], baddieGunX['left'] = self.move(baddieX, baddieGunX)
                 else:
                     self.walkLeft = False
                     self.direction = 0
@@ -69,7 +67,7 @@ and another boolean the determins if it should play sound.'''
                     self.walkLeft = False
                     self.walkRight = False
                     if self.time == 20:
-                        gunData['shootBullet'] = True
+                        self.shoot = True
 
             #Deside whether to walk right or shoot right
             else:
@@ -78,17 +76,18 @@ and another boolean the determins if it should play sound.'''
                     self.walkLeft = False
                     self.walkRight = True
                     if abs(baddieX) + 400 <= x[0]:
-                        baddieX, gunData['gunX']['right'], gunData['gunX']['left'] = self.move(baddieX, gunData['gunX'])
+                        baddieX, baddieGunX['right'], baddieGunX['left'] = self.move(baddieX, baddieGunX)
                 if abs(baddieX) + 400 >= x[0] - 400:
                     self.direction = 1
                     self.walkLeft = False
                     self.walkRight = False
                     if self.time == 30:
-                        gunData['shootBullet'] = True
+                        self.shoot = True
       
-            self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, baddieX, '9mm')
-            gunData = super(AI, self).shootPistol(gunData)
+            self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, baddieX, '9mm') 
+            self.shoot, hit, ammo, message, score, officerX, drop, self.reload = super(AI, self).shootPistol(self.shoot, hit, self.direction, baddieGunX, sound, x)
 
         if self.time == 30:
             self.time = 0
+
         return hit, self.reload
