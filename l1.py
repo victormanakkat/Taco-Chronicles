@@ -161,8 +161,8 @@ class L1(object):
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
                 
-                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0],
-                                                           self.officerGunX, self.drop, self.hit, self.gunData['sound'], self.officerGunData)
+                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit,
+                                                           self.gunData['sound'], self.officerGunData)
 
             pygame.display.update()
             self.clock.tick()

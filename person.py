@@ -283,8 +283,10 @@ weapons, and shoots bullets on command.
     def shootPistol(self, gunData, target_rect = None):
         #Get message box value and setup the cops location
         if self.character == 'officer':
+            print 'B: ', gunData['gunX']
             self.location['9mm'][1]['right'] = gunData['gunX']['right'] 
             self.location['9mm'][1]['left']  = gunData['gunX']['left'] 
+            print 'C: ', gunData['gunX']
         #If person is facing right set coordinates and blit gun to screen
         if gunData['direction'] == 1:
             if  self.character == 'Doctor Taco':

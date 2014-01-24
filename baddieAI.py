@@ -51,6 +51,7 @@ and another boolean the determins if it should play sound.'''
     
     def think(self,  x, baddieX, baddieGunX, dead, hit, sound, gunData):
         gunData['direction'] = self.direction
+        print 'A: ',gunData['gunX']
         gunData['gunX'] = self.baddieGunX
         if dead == False:
             self.time += 1
