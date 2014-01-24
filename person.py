@@ -280,43 +280,39 @@ weapons, and shoots bullets on command.
             goUp = None
         return goUp
         
-    def shootPistol(self, gunData, target_rect = None):
+    def shootPistol(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0): 
         #Get message box value and setup the cops location
-        if self.character == 'officer':
-            print 'B: ', gunData['gunX']
-            self.location['9mm'][1]['right'] = gunData['gunX']['right'] 
-            self.location['9mm'][1]['left']  = gunData['gunX']['left'] 
-            print 'C: ', gunData['gunX']
+        self.location['9mm'][1]['right'] = officerGunX['right']
+        self.location['9mm'][1]['left'] = officerGunX['left']
+        self.message = message
         #If person is facing right set coordinates and blit gun to screen
-        if gunData['direction'] == 1:
+        if direction == 1:
             if  self.character == 'Doctor Taco':
                 self.gunRect[0] = self.location['9mm'][0]['right']
             if self.character == 'officer':
                 self.gunRect[0] = self.location['9mm'][1]['right']
             self.windowSurface.blit(self.right9mm, self.gunRect)
-
         #If person is facing left set coordinates and blit gun to screen
-        if gunData['direction'] == 0:
+        if direction == 0:
             if self.character == 'Doctor Taco':
                 self.gunRect[0] = self.location['9mm'][0]['left']
             if self.character == 'officer':
                 self.gunRect[0] = self.location['9mm'][1]['left']
             self.windowSurface.blit(self.left9mm, self.gunRect)
-
         #If gun is fired add a bullet to the bullet list with its direction. Then, subtract one from ammLeft
-        if gunData['shootBullet'] == True:
-            if gunData['ammoLeft'] > 0 and self.character == 'Doctor Taco':
+        if shootBullet == True:
+            if ammoLeft > 0 and self.character == 'Doctor Taco':
                 self.bullets.append(pygame.Rect(self.gunRect[0], self.gunRect[1], 4, 4))
-                self.bulletDirection.append(gunData['direction'])
-                gunData['shootBullet'] = False
-                gunData['ammoLeft'] -= 1
+                self.bulletDirection.append(direction)
+                shootBullet = False
+                ammoLeft -= 1
                 #If the sound is on stop previous sound and play the gun shot
-                if gunData['sound']:
+                if sound:
                     self.gunshot.stop()
                     self.gunshot.play()
             # If your out of ammo, play a click and change the message
-            if gunData['ammoLeft'] <= 0 and self.character == 'Doctor Taco':
-                if gunData['sound']:
+            if ammoLeft <= 0 and self.character == 'Doctor Taco':
+                if sound:
                     self.gunclick.stop()
                     self.gunclick.play()
                 self.message = 'No Ammo Left!'
@@ -324,19 +320,17 @@ weapons, and shoots bullets on command.
                 self.gunclick.stop()
             if self.character == 'officer':
                 self.bullets.append(pygame.Rect(self.gunRect[0], self.gunRect[1], 4, 4))
-                self.bulletDirection.append(gunData['direction'])
-                gunData['shootBullet'] = False
-                if gunData['sound']:
+                self.bulletDirection.append(direction)
+                shootBullet = False
+                if sound:
                     self.gunshot.stop()
                     self.gunshot.play()
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            gunData['score'], gunData['message'], gunData['hit'], self.die = self.shot(self.bullets, self.bulletDirection, gunData['score'],
-                                                                                          target_rect, gunData['message'], gunData['hit'])
+            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
         if self.character == 'officer':
-            gunData['score'], gunData['message'], gunData['hit'], self.die = self.shot(self.bullets, self.bulletDirection, gunData['score'], target_rect,
-                                                                                          gunData['message'], gunData['hit'])
+            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -358,7 +352,7 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return gunData, self.drop, self.die
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
 
     def shootAK(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0):
         #Get message box value and setup the cops location
