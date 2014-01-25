@@ -2,7 +2,7 @@
 # By Tyler Spadgenske
 VERSION = '0.1.0'
 
-import pygame, sys
+import pygame, sys, os
 from pygame.locals import *
 
 #import custom classes
@@ -21,6 +21,7 @@ from intro import Intro
 #Setup the main screen display and clock
 pygame.init()
 
+os.environ ['SDL_VIDEO_WINDOW_POS'] = 'center'
 WINDOWWIDTH = 1200
 WINDOWHIEGHT = 600
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
