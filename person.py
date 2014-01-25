@@ -284,6 +284,12 @@ weapons, and shoots bullets on command.
         #Get message box value and setup the cops location
         self.location['9mm'][1]['right'] = officerGunX['right']
         self.location['9mm'][1]['left'] = officerGunX['left']
+
+        #Move gun to correct position for Dr. Taco
+        if self.character == 'Doctor Taco':
+            if self.get_rect()[0] > 599:
+                self.location['9mm'][0]['right'] = 660
+                self.location['9mm'][0]['left'] = 600
         self.message = message
         #If person is facing right set coordinates and blit gun to screen
         if direction == 1:
@@ -355,8 +361,15 @@ weapons, and shoots bullets on command.
         return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
 
     def shootAK(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0):
-        #Get message box value and setup the cops location
+        #Get message box value
         self.message = message
+
+        #Move gun to correct position for Dr. Taco
+        if self.character == 'Doctor Taco':
+            if self.get_rect()[0] > 599:
+                self.location['AK-47'][0]['right'] = 650
+                self.location['AK-47'][0]['left'] = 570
+                
         #If person is facing right set coordinates and blit gun to screen
         if direction == 1:
             if  self.character == 'Doctor Taco':
@@ -415,8 +428,15 @@ weapons, and shoots bullets on command.
         return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
         
     def shootShotgun(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0):
-        #Get message box value and setup the cops location
+        #Get message box value
         self.message = message
+
+        #Move gun to correct position for Dr. Taco
+        if self.character == 'Doctor Taco':
+            if self.get_rect()[0] > 599:
+                self.location['shotgun'][0]['right'] = 645
+                self.location['shotgun'][0]['left'] = 550
+                
         #If person is facing right set coordinates and blit gun to screen
         if direction == 1:
             if  self.character == 'Doctor Taco':
@@ -479,8 +499,15 @@ weapons, and shoots bullets on command.
         return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
 
     def shootBazooka(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, weapon = ''):
-        #Get message box value and setup the cops location
+        #Get message box value 
         self.message = message
+
+        #Move gun to correct position for Dr. Taco
+        if self.character == 'Doctor Taco':
+            if self.get_rect()[0] > 599:
+                self.location['bazooka'][0]['right'] = 625
+                self.location['bazooka'][0]['left'] = 570
+                
         #If person is facing right set coordinates and blit gun to screen
         if direction == 1:
             if self.character == 'Doctor Taco':
