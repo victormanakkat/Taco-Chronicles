@@ -28,7 +28,7 @@ weapons, and shoots bullets on command.
         self.takeStep = False
         self.countJump = 0
         self.location = {'9mm':[{'right':130, 'left':72},{'right':officerGunX['right'], 'left':officerGunX['left']}], 'AK-47':[{'right':117, 'left':50}], 'shotgun':
-                         [{'right':117, 'left':10}],'bazooka': [{'right':100, 'left':40}]}
+                         [{'right':117, 'left':10}],'bazooka': [{'right':100, 'left':40}], 'flamethrower': [{'right':130, 'left':30}]}
         self.centered = False
 
         self.endgame = Popups(windowSurface)
@@ -145,8 +145,22 @@ weapons, and shoots bullets on command.
 
         #Create rocket image
         self.rocketRight = pygame.image.load('Weapons\\rocket.png')
-        self.rocketLeft = pygame.transform.flip(self.rocketRight, True, False)            
+        self.rocketLeft = pygame.transform.flip(self.rocketRight, True, False)
 
+        #Initialize flamethrower image and rect
+        self.rightFlamethrowerImage = pygame.image.load('Weapons\\flamethrower.gif')
+        self.flamethrowerRight = pygame.transform.scale(self.rightFlamethrowerImage, (70, 30))
+
+        self.flamethrowerLeft = pygame.transform.flip(self.flamethrowerRight, True, False)
+       
+        self.flamethrowerRect = self.flamethrowerRight.get_rect()
+        self.flamethrowerRect.centery = self.rect.centery - 50
+
+        #Create flame image
+        self.flameRight = pygame.image.load('Weapons\\flame.png')
+        self.flameLeft = pygame.transform.flip(self.flameRight, True, False)
+        self.flameRect = self.flameRight.get_rect()
+        
         #Setup the bullets
         self.bullets = []
         self.shootBullet = True
@@ -159,12 +173,15 @@ weapons, and shoots bullets on command.
         self.reload = False
         self.back = False
         self.die = False
+        self.showFlame = False
+        self.flameDirection = 1
 
         #Setup sound
         self.gunshot = pygame.mixer.Sound('sound\\gunshot.wav')
         self.gunclick = pygame.mixer.Sound('sound\\gunclick.wav')
         self.whoosh = pygame.mixer.Sound('sound\\rocket.wav')
-
+        self.flame = pygame.mixer.Sound('sound\\flame.wav')
+        
     #This function returns the characters rect
     def get_rect(self):
         if self.character == 'Doctor Taco':
@@ -195,8 +212,9 @@ weapons, and shoots bullets on command.
                 for every_bullet in bulletList:
                     #If a bullet hits the closest target remove it from bullet list
                     if every_bullet.colliderect(target_rect):
-                        bulletList.pop()
-                        bulletDirList.pop()
+                        if weapon != 'flamethrower':
+                            bulletList.pop()
+                            bulletDirList.pop()
                         if weapon == 'bazooka':
                             self.wound += self.SHOTS_TILL_COPS_DEATH - 1
                         self.wound += 1
@@ -264,6 +282,7 @@ weapons, and shoots bullets on command.
             self.AKgunRect[1] -= self.JUMP_SPEED
             self.shotgunRect[1] -= self.JUMP_SPEED
             self.bazookaRect[1] -= self.JUMP_SPEED
+            self.flamethrowerRect[1] -= self.JUMP_SPEED
         elif goUp == False:
             if self.character == 'Doctor Taco':
                 self.rect[1] += self.JUMP_SPEED
@@ -276,6 +295,7 @@ weapons, and shoots bullets on command.
             self.AKgunRect[1] += self.JUMP_SPEED
             self.shotgunRect[1] += self.JUMP_SPEED
             self.bazookaRect[1] += self.JUMP_SPEED
+            self.flamethrowerRect[1] += self.JUMP_SPEED
         if self.countJump == 0:
             goUp = None
         return goUp
@@ -562,6 +582,75 @@ weapons, and shoots bullets on command.
             if bullet[0] > 1200 or bullet[0] < 0:
                 self.bullets.pop()
                 self.bulletDirection.pop()
+                
+            self.bulletNum += 1
+            self.num += 1
+        self.bulletNum = 0
+        self.num = 0
+
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
+
+    def shootFlame(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, weapon = ''):
+        #Get message box value
+        self.message = message
+
+        #Move gun to correct position for Dr. Taco
+        if self.character == 'Doctor Taco':
+            if self.get_rect()[0] > 599:
+                self.location['flamethrower'][0]['right'] = 645
+                self.location['flamethrower'][0]['left'] = 550
+                
+        #If person is facing right set coordinates and blit gun to screen
+        if direction == 1:
+            if  self.character == 'Doctor Taco':
+                self.flamethrowerRect[0] = self.location['flamethrower'][0]['right']
+            self.windowSurface.blit(self.flamethrowerRight, self.flamethrowerRect)
+            self.flameDirection = 1
+            
+        #If person is facing left set coordinates and blit gun to screen
+        if direction == 0:
+            if self.character == 'Doctor Taco':
+                self.flamethrowerRect[0] = self.location['flamethrower'][0]['left']
+            self.windowSurface.blit(self.flamethrowerLeft, self.flamethrowerRect)
+            self.flameDirection = 0
+            
+        #If gun is fired add a bullet to the bullet list with its direction. Then, subtract one from ammoLeft
+        if shootBullet == True:
+            if ammoLeft > 0:
+                self.showFlame = True
+                self.flameDirection = direction
+                ammoLeft -= .1
+                #If the sound is on stop previous sound and play the gun shot
+                if sound:
+                    self.flame.play()
+            # If your out of ammo, play a click and change the message
+            if ammoLeft <= 0:
+                if sound:
+                    self.gunclick.stop()
+                    self.gunclick.play()
+                self.message = 'No Ammo Left!'
+            else:
+                self.gunclick.stop()
+
+        else:
+            self.showFlame = False
+            self.flame.stop()
+
+        #If run self.shot() to move bullets and determin whether the person is dead
+        if self.character == 'Doctor Taco':
+            score, self.message, hit, self.die = self.shot([self.flameRect], self.bulletDirection, score, target_rect, self.message, hit, 'flamethrower')
+
+        # for every bullet in the bullet list blit it and move it in the correct direction
+        if self.showFlame:
+            if self.flameDirection == 1:
+                self.flameRect[0] = self.flamethrowerRect[0] + 60
+                self.flameRect[1] = self.flamethrowerRect[1] - 45
+                self.windowSurface.blit(self.flameRight, self.flameRect)
+            if self.flameDirection == 0:
+                self.flameRect[0] = self.flamethrowerRect[0] - 60
+                self.flameRect[1] = self.flamethrowerRect[1] - 45
+                self.windowSurface.blit(self.flameLeft, self.flameRect)
+                
                 
             self.bulletNum += 1
             self.num += 1

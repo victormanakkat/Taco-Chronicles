@@ -100,6 +100,8 @@ class L1(object):
                     self.moveLeft = False
                     self.shootBullet = False
                     self.rapidFire[1] = False
+                    if self.currentWeapon == 'flamethrower':
+                        self.shootBullet =  False
 
                 self.dropDownGun = self.gunArrowButton.arrow(self.dropDownGun, event, self.gunButtonCoords)
                 self.dropDownTool = self.toolArrowButton.arrow(self.dropDownTool, event, self.toolButtonCoords)
@@ -145,6 +147,11 @@ class L1(object):
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootBazooka(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
                         self.currentWeapon)
+                if self.currentWeapon == 'flamethrower':
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootFlame(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
+                        self.currentWeapon)
+                    
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)

@@ -35,7 +35,7 @@ SKY_BLUE = (0, 255, 255)
 windowSurface.fill(SKY_BLUE)
 
 #Setup game data
-lockedGuns = {'9mm':False, 'shotgun':False, 'AK-47':False, 'bazooka':False, 'flamethrower':True}
+lockedGuns = {'9mm':False, 'shotgun':False, 'AK-47':False, 'bazooka':False, 'flamethrower':False}
 lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
 sound = True
 gameData = {'sound':sound, 'lockedGuns':lockedGuns, 'lockedTools':lockedTools}

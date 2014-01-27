@@ -119,7 +119,7 @@ This class is only used inside the Toolbar() class
         self.bazookaTextRect[1] = 50
     
         #Initialize Flamethrower images and text
-        self.flamethrowerImage2 = pygame.image.load('Weapons\\flamethrowerRight.gif')
+        self.flamethrowerImage2 = pygame.image.load('Weapons\\flamethrower.gif')
         self.flamethrowerImage = pygame.transform.scale(self.flamethrowerImage2, (90, 40))
         self.flamethrowerRect = self.flamethrowerImage.get_rect()
         self.flamethrowerRect[0] = 615
