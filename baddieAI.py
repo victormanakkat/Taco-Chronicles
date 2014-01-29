@@ -1,5 +1,5 @@
 #Baddie AI Module By Tyler Spadgenske
-import pygame, sys
+import pygame, sys, random
 from pygame.locals import *
 #Custom Modules
 from person import Person
@@ -27,11 +27,11 @@ and another boolean the determins if it should play sound.'''
         self.baddieGunX = {'right':abs(self.baddieX) + 45, 'left':self.baddieX + 7}
         self.shoot = False
         self.time = 0
-        self.character = 'officer'
+        self.characters = ['sheriff', 'deputy']
         self.centered = False
         self.reload = False
         self.back = False
-        super(AI, self).__init__(self.character, windowSurface, abs(self.baddieX), self.baddieGunX)
+        super(AI, self).__init__('officer', windowSurface, abs(self.baddieX), self.baddieGunX, random.choice(self.characters))
 
     def get_rect(self):
         return super(AI, self).get_rect()
