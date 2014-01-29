@@ -18,6 +18,7 @@ class L1(object):
     def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
 
         #Create game data
+        self.TOTAL_COPS = 10
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
@@ -68,14 +69,18 @@ class L1(object):
         self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
         self.ammoBoxes = Powerups(self.windowSurface, self.score)
         self.ammoBoxCoords = [600, 490]
-        self.cop1 = AI(self.windowSurface, self.skill_level, self.officerX)
+        self.copList = []
+        for cop in range(0, self.TOTAL_COPS):
+            self.copList.append(AI(self.windowSurface, self.skill_level, self.officerX))
 
     def play(self):
+        #If there is no quit event, (i.e reload or back)
         while self.runGame == True:
+            #Setup rect list and blit background
             self.reload = False
-            self.rectList = [self.ammoBoxCoords, self.cop1.get_rect(), self.cop1.get_gun_rect()]
-            self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.centered)
-            self.officerGunX = {'right':self.rectList[1][0] + 45, 'left':self.rectList[1][0] + 7}
+            self.rectList = [self.ammoBoxCoords]
+            self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
+            self.officerGunX = {'right':self.copList[0].get_rect()[0] + 45, 'left':self.copList[0].get_rect()[0] + 7}
             for event in pygame.event.get():
                 self.sound, self.paused, self.reload = self.tools.addButtons(self.sound, event)
                 if event.type == QUIT:
@@ -135,28 +140,32 @@ class L1(object):
                 self.goUp = self.DrTaco.jump(self.goUp)
                 if self.currentWeapon == '9mm':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
                 if self.currentWeapon == 'shotgun':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
                 if self.currentWeapon == 'AK-47':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score)
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
                     self.shootBullet = False
                 if self.currentWeapon == 'bazooka':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootBazooka(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         self.currentWeapon)
                 if self.currentWeapon == 'flamethrower':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootFlame(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.cop1.get_rect(), self.ammo, self.message, self.score,
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         self.currentWeapon)
                     
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
-                
-                self.hit, self.endReload = self.cop1.think(self.DrTaco.get_rect(), self.cop1.get_rect()[0], self.officerGunX, self.drop, self.hit, self.sound)
+
+                self.index = 0
+                for cop in self.copList:                
+                    self.hit, self.endReload = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.officerGunX,
+                                                         self.drop, self.hit, self.sound)
+                    self.index += 1
 
             pygame.display.update()
             self.clock.tick()
