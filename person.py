@@ -241,34 +241,37 @@ weapons, and shoots bullets on command.
         if self.drop == False:
             #If class is run by Doctor Taco continue on
             if target_rect != None:
-                for every_bullet in bulletList:
-                    #If a bullet hits the closest target remove it from bullet list
-                    if every_bullet.colliderect(target_rect):
-                        if weapon != 'flamethrower':
-                            bulletList.pop()
-                            bulletDirList.pop()
-                        if weapon == 'bazooka':
-                            self.wound += self.SHOTS_TILL_COPS_DEATH - 1
-                        self.wound += 1
-                        if self.character == 'officer':
-                            hit = True
-                if self.character == 'Doctor Taco':
-                    #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
-                    if self.wound == self.SHOTS_TILL_COPS_DEATH:
+                for cop in target_rect:
+                    for every_bullet in bulletList:
+                        #If a bullet hits the closest target remove it from bullet list
                         if self.character == 'Doctor Taco':
-                            message = 'Nice Shot!'
-                            score += 100
-                        self.wound = -100
-                        self.drop = True
+                            if every_bullet.colliderect(cop.get_rect()):
+                                if weapon != 'flamethrower':
+                                    bulletList.pop()
+                                    bulletDirList.pop()
+                                if weapon == 'bazooka':
+                                    self.wound += self.SHOTS_TILL_COPS_DEATH - 1
+                                self.wound += 1
+                        else:
+                            if every_bullet.colliderect(target_rect):
+                                hit = True 
+                    if self.character == 'Doctor Taco':
+                        #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
+                        if self.wound == self.SHOTS_TILL_COPS_DEATH:
+                            if self.character == 'Doctor Taco':
+                                message = 'Nice Shot!'
+                                score += 100
+                            self.wound = -100
+                            self.drop = True
 
-                if self.character == 'officer':
-                    if self.wound == self.SHOTS_TILL_TACOS_DEATH:
-                        #If Dr. Taco is dead, end game
-                        if self.character == 'officer':
-                            self.endgame.endgame()
-                            self.die = True
-                        self.wound = -100
-                        self.drop = True
+                    if self.character == 'officer':
+                        if self.wound == self.SHOTS_TILL_TACOS_DEATH:
+                            #If Dr. Taco is dead, end game
+                            if self.character == 'officer':
+                                self.endgame.endgame()
+                                self.die = True
+                            self.wound = -100
+                            self.drop = True
                         
         return score, message, hit, self.drop
 
