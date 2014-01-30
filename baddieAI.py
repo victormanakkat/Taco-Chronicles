@@ -84,7 +84,7 @@ and another boolean the determins if it should play sound.'''
                     if self.time == 30:
                         self.shoot = True
       
-            self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, baddieX, '9mm') 
+            self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, '9mm', baddieX) 
             self.shoot, hit, ammo, message, score, officerX, drop, self.reload = super(AI, self).shootPistol(self.shoot, hit, self.direction, baddieGunX, sound, x)
 
         if self.time == 30:

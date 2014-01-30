@@ -43,6 +43,7 @@ class L1(object):
         self.toolButtonCoords = [395, 30, 435, 30, 415, 50]
         self.officerX = 1500
         self.officerGunX = {'right':abs(self.officerX) + 45, 'left':self.officerX + 7}
+        self.gunXlist = []
         self.takeStep = 0
         self.direction = 1
         self.goUp = None
@@ -70,8 +71,16 @@ class L1(object):
         self.ammoBoxes = Powerups(self.windowSurface, self.score)
         self.ammoBoxCoords = [600, 490]
         self.copList = []
+        self.Xlist = [1000, 600, 1200, 1800, 2400, 2800, 3400, 3700, 4000, 5000]
+        self.index = 0
         for cop in range(0, self.TOTAL_COPS):
-            self.copList.append(AI(self.windowSurface, self.skill_level, self.officerX))
+            self.copList.append(AI(self.windowSurface, self.skill_level, self.Xlist[self.index]))
+            self.index += 1
+
+        self.index = 0
+        for i in range(0, self.TOTAL_COPS):
+            self.gunXlist.append({'right':abs(self.Xlist[self.index]) + 45, 'left':self.Xlist[self.index] + 7})
+            self.index += 1
 
     def play(self):
         #If there is no quit event, (i.e reload or back)
@@ -80,7 +89,13 @@ class L1(object):
             self.reload = False
             self.rectList = [self.ammoBoxCoords]
             self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
-            self.officerGunX = {'right':self.copList[0].get_rect()[0] + 45, 'left':self.copList[0].get_rect()[0] + 7}
+
+            #Setup all the cops gun position.
+            self.index = 0
+            for cop in self.copList:
+                self.gunXlist[self.index] = {'right':self.copList[self.index].get_rect()[0] + 45, 'left':self.copList[self.index].get_rect()[0] + 7}
+                self.index += 1
+                
             for event in pygame.event.get():
                 self.sound, self.paused, self.reload = self.tools.addButtons(self.sound, event)
                 if event.type == QUIT:
@@ -136,7 +151,7 @@ class L1(object):
             self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
 
             if self.paused != True:
-                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.officerX, self.currentWeapon)
+                self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.currentWeapon)
                 self.goUp = self.DrTaco.jump(self.goUp)
                 if self.currentWeapon == '9mm':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
@@ -163,7 +178,7 @@ class L1(object):
 
                 self.index = 0
                 for cop in self.copList:                
-                    self.hit, self.endReload = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.officerGunX,
+                    self.hit, self.endReload = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
                                                          self.drop, self.hit, self.sound)
                     self.index += 1
 

@@ -278,9 +278,10 @@ weapons, and shoots bullets on command.
     def burned():
         pass
                 
-    def walk(self, takeStep, direction, walkLeft, walkRight, officerX, weapon): #This function is used to make Dr. Taco move his legs from walking position to standing.
-        self.officerRect[0] = officerX
-        self.officerRect2[0] = officerX
+    def walk(self, takeStep, direction, walkLeft, walkRight, weapon, officerX = None): #This function is used to make Dr. Taco move his legs from walking position to standing.
+        if officerX != None:
+            self.officerRect[0] = officerX
+            self.officerRect2[0] = officerX
         self.countWalk += 1
         if self.countWalk == 5:
             self.takeStep = False
