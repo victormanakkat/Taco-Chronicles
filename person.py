@@ -261,15 +261,15 @@ weapons, and shoots bullets on command.
                             if self.character == 'Doctor Taco':
                                 message = 'Nice Shot!'
                                 score += 100
-                            self.wound = -100
-                            self.drop = True
+                            self.wound = 0
+                            target_rect.remove(cop)
+                            break
 
                     if self.character == 'officer':
                         if self.wound == self.SHOTS_TILL_TACOS_DEATH:
                             #If Dr. Taco is dead, end game
-                            if self.character == 'officer':
-                                self.endgame.endgame()
-                                self.die = True
+                            self.endgame.endgame()
+                            self.die = True
                             self.wound = -100
                             self.drop = True
                         
