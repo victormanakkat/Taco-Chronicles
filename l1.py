@@ -159,20 +159,22 @@ class L1(object):
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         lifeLeft = self.lifeLeft)
                 if self.currentWeapon == 'shotgun':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootShotgun(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
+                        lifeLeft = self.lifeLeft)
                 if self.currentWeapon == 'AK-47':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootAK(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootAK(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
+                        lifeLeft = self.lifeLeft)
                     self.shootBullet = False
                 if self.currentWeapon == 'bazooka':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootBazooka(
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootBazooka(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
-                        self.currentWeapon)
+                        self.currentWeapon, lifeLeft = self.lifeLeft)
                 if self.currentWeapon == 'flamethrower':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootFlame(
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootFlame(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
-                        self.currentWeapon)
+                        self.currentWeapon, self.lifeLeft)
                     
 
                 self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
