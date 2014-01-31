@@ -225,7 +225,7 @@ weapons, and shoots bullets on command.
     def get_gun_rect(self):
         return self.gunRect
 
-    #This function moves Dr. Taco at the beginning of the game to center screen
+    #This function moves Dr. Taco (and his gun) at the beginning of the game to center screen
     def move(self, rect, walkingRect, location, weapon):
         centered = False
         if rect[0] < 600:
@@ -245,16 +245,24 @@ weapons, and shoots bullets on command.
                     for every_bullet in bulletList:
                         #If a bullet hits the closest target remove it from bullet list
                         if self.character == 'Doctor Taco':
+                            #If bullet collides with cops rectangle.
                             if every_bullet.colliderect(cop.get_rect()):
+                                #Remove the bullet from list unless it is flame from the flamethrower.
                                 if weapon != 'flamethrower':
                                     bulletList.pop()
                                     bulletDirList.pop()
+                                #If Dr. Taco is using the bazooka, give cop even more damage.
                                 if weapon == 'bazooka':
                                     self.wound += self.SHOTS_TILL_COPS_DEATH - 1
                                 self.wound += 1
                         else:
+                            #If a bullet collides with Dr. Taco remove it from list and set hit to true to lower health beam.
                             if every_bullet.colliderect(target_rect):
-                                hit = True 
+                                bulletList.pop()
+                                bulletDirList.pop()
+                                hit = True
+                                self.wound += 1
+                                
                     if self.character == 'Doctor Taco':
                         #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
                         if self.wound == self.SHOTS_TILL_COPS_DEATH:
