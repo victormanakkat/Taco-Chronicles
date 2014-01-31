@@ -184,6 +184,9 @@ class L1(object):
                 for cop in self.copList:                
                     self.hit, self.endReload, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
                                                          self.drop, self.hit, self.sound, self.lifeLeft)
+                    if self.endReload:
+                        break
+                    
                     self.index += 1
 
             pygame.display.update()

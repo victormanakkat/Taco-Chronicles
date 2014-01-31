@@ -422,7 +422,7 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die, lifeLeft
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop, self.die, lifeLeft
 
     def shootAK(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None):
         #Get message box value
@@ -489,7 +489,7 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die, lifeLeft
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop, self.die, lifeLeft
         
     def shootShotgun(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None):
         #Get message box value
