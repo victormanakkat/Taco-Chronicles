@@ -59,6 +59,7 @@ class L1(object):
         self.die = False
         self.val = None
         self.rapidFire = [0, False]
+        self.lifeLeft = 0
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -154,8 +155,9 @@ class L1(object):
                 self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.currentWeapon)
                 self.goUp = self.DrTaco.jump(self.goUp)
                 if self.currentWeapon == '9mm':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootPistol(
-                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootPistol(
+                        self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
+                        lifeLeft = self.lifeLeft)
                 if self.currentWeapon == 'shotgun':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val = self.DrTaco.shootShotgun(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score)
@@ -178,8 +180,8 @@ class L1(object):
 
                 self.index = 0
                 for cop in self.copList:                
-                    self.hit, self.endReload = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
-                                                         self.drop, self.hit, self.sound)
+                    self.hit, self.endReload, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
+                                                         self.drop, self.hit, self.sound, self.lifeLeft)
                     self.index += 1
 
             pygame.display.update()

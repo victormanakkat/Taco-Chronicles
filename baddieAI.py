@@ -50,7 +50,7 @@ and another boolean the determins if it should play sound.'''
             baddieGunX['left'] += 2
         return baddieX, baddieGunX['right'], baddieGunX['left']
     
-    def think(self,  x, baddieX, baddieGunX, dead, hit, sound):
+    def think(self,  x, baddieX, baddieGunX, dead, hit, sound, lifeLeft):
         if dead == False:
             self.time += 1
             #Deside whether to walk forward or shoot left
@@ -85,9 +85,11 @@ and another boolean the determins if it should play sound.'''
                         self.shoot = True
       
             self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, '9mm', baddieX) 
-            self.shoot, hit, ammo, message, score, officerX, drop, self.reload = super(AI, self).shootPistol(self.shoot, hit, self.direction, baddieGunX, sound, x)
+            self.shoot, hit, ammo, message, score, officerX, drop, self.reload, lifeLeft = super(AI, self).shootPistol(self.shoot, hit,
+                                                                                                                       self.direction, baddieGunX, sound, x,
+                                                                                                                       lifeLeft = lifeLeft)
 
         if self.time == 30:
             self.time = 0
 
-        return hit, self.reload
+        return hit, self.reload, lifeLeft

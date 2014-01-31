@@ -236,7 +236,7 @@ weapons, and shoots bullets on command.
         else: centered = True
         return rect, walkingRect, location, centered
 
-    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit, weapon = ''):
+    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit, weapon = '', lifeLeft = None):
         #If person is still alive continue on
         if self.drop == False:
             #If class is run by Doctor Taco continue on
@@ -261,7 +261,7 @@ weapons, and shoots bullets on command.
                                 bulletList.pop()
                                 bulletDirList.pop()
                                 hit = True
-                                self.wound += 1
+                                lifeLeft += 1
                                 
                     if self.character == 'Doctor Taco':
                         #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
@@ -274,14 +274,14 @@ weapons, and shoots bullets on command.
                             break
 
                     if self.character == 'officer':
-                        if self.wound == self.SHOTS_TILL_TACOS_DEATH:
+                        if lifeLeft == self.SHOTS_TILL_TACOS_DEATH:
                             #If Dr. Taco is dead, end game
                             self.endgame.endgame()
                             self.die = True
-                            self.wound = -100
+                            lifeLeft = -100
                             self.drop = True
                         
-        return score, message, hit, self.drop
+        return score, message, hit, self.drop, lifeLeft
 
     def burned():
         pass
@@ -344,7 +344,7 @@ weapons, and shoots bullets on command.
             goUp = None
         return goUp
         
-    def shootPistol(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0): 
+    def shootPistol(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None): 
         #Get message box value and setup the cops location
         self.location['9mm'][1]['right'] = officerGunX['right']
         self.location['9mm'][1]['left'] = officerGunX['left']
@@ -398,9 +398,9 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
+            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
         if self.character == 'officer':
-            score, self.message, hit, self.die = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit)
+            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -422,7 +422,7 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die, lifeLeft
 
     def shootAK(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0):
         #Get message box value
