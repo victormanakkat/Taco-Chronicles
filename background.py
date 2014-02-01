@@ -130,7 +130,7 @@ class Level_1(Background):
         if self.TacoBellRect[0] > -900:
             self.windowSurface.blit(self.TacoBellImage, self.TacoBellRect)
         super(Level_1, self).move(self.L1Buildings, moveRight, moveLeft, copList, rectList, centered)
-        return rectList
+        return rectList, self.TacoBellRect[0]
 
 class Level_2(Background):
     def  __init__(self, surface):
