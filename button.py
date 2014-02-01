@@ -49,7 +49,7 @@ class Button:
             else:
                 self.chooseGunButton = pygame.draw.polygon(windowSurface, self.WHITE, ((coords[0], coords[1]), (coords[4], coords[5]), (coords[2], coords[1])))
 
-    def roundButton(self, event, button, location):
+    def roundButton(self, event, button, location, flip = False):
 
         #Setup reload image and rect
         self.reloadImage = pygame.image.load('buttons\\reload.png')
@@ -64,6 +64,9 @@ class Button:
         self.backRect.centerx = location[0]
         self.backRect.centery = location[1]
         self.backImageBIG = pygame.transform.scale(self.backImage, (75, 75))
+
+        self.backImageBIGflip = pygame.transform.flip(self.backImageBIG, True, False)
+        self.backImageFlip = pygame.transform.flip(self.backImage, True, False)
 
         #Setup sound on image and Rect
         self.soundOnImage = pygame.image.load('buttons\\soundOn.png')
@@ -94,10 +97,16 @@ class Button:
         #If back button is selected, make it big or small
         if self.enlarge_back != True:
             if button == 'back':
-                self.windowSurface.blit(self.backImage, self.backRect)
+                if flip:
+                    self.windowSurface.blit(self.backImageFlip, self.backRect)
+                else:   
+                    self.windowSurface.blit(self.backImage, self.backRect)
         else:
             if button == 'back':
-                self.windowSurface.blit(self.backImageBIG, self.backRect)
+                if flip:
+                    self.windowSurface.blit(self.backImageBIGflip, self.backRect)                          
+                else:
+                    self.windowSurface.blit(self.backImageBIG, self.backRect)
 
         #If Sound button is selected, make it big or small
         if self.enlarge_sound != True:
