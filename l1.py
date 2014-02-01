@@ -13,12 +13,13 @@ from selectTool import selectToolMenu
 from person import Person
 from powerups import Powerups
 from baddieAI import AI
+from popups import Popups
 
 class L1(object):
     def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
 
         #Create game data
-        self.TOTAL_COPS = 10
+        self.TOTAL_COPS = 30
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
@@ -60,6 +61,9 @@ class L1(object):
         self.val = None
         self.rapidFire = [0, False]
         self.lifeLeft = 0
+        self.endPoint = 0
+        self.back = False
+        self.tacosCollected = 0
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -70,9 +74,17 @@ class L1(object):
         self.toolArrowButton = Button(self.windowSurface)
         self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
         self.ammoBoxes = Powerups(self.windowSurface, self.score)
+        self.wingame = Popups(self.windowSurface)
+        
         self.ammoBoxCoords = [600, 490]
         self.copList = []
-        self.Xlist = [1000, 600, 1200, 1800, 2400, 2800, 3400, 3700, 4000, 5000]
+        self.Xlist = []
+        self.num = 700
+        for i in range(0, self.TOTAL_COPS):
+            self.Xlist.append(self.num)
+            self.num += 400
+        self.num = 0
+        
         self.index = 0
         for cop in range(0, self.TOTAL_COPS):
             self.copList.append(AI(self.windowSurface, self.skill_level, self.Xlist[self.index]))
@@ -89,7 +101,7 @@ class L1(object):
             #Setup rect list and blit background
             self.reload = False
             self.rectList = [self.ammoBoxCoords]
-            self.rectList = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
+            self.rectList, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
 
             #Setup all the cops gun position.
             self.index = 0
@@ -188,6 +200,9 @@ class L1(object):
                         break
                     
                     self.index += 1
+
+            if self.endPoint < 298:
+                self.endReload, self.back = self.wingame.wingame(self.score, self.tacosCollected)
 
             pygame.display.update()
             self.clock.tick()
