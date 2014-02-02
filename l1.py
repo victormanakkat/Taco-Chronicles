@@ -19,7 +19,7 @@ class L1(object):
     def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
 
         #Create game data
-        self.TOTAL_COPS = 30
+        self.TOTAL_COPS = 32
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
@@ -38,7 +38,7 @@ class L1(object):
         self.dropDownGun = False
         self.dropDownTool = False
         self.score = 0
-        self.ammo = 15
+        self.ammo = 50
         self.hit = False
         self.gunButtonCoords = [695, 30, 735, 30, 715, 50]
         self.toolButtonCoords = [395, 30, 435, 30, 415, 50]
@@ -73,7 +73,7 @@ class L1(object):
         self.gunArrowButton = Button(self.windowSurface)
         self.toolArrowButton = Button(self.windowSurface)
         self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
-        self.ammoBoxes = Powerups(self.windowSurface, self.score)
+        self.supplies = Powerups(self.windowSurface, self.score)
         self.wingame = Popups(self.windowSurface)
         
         self.ammoBoxCoords = [600, 490]
@@ -82,7 +82,7 @@ class L1(object):
         self.num = 700
         for i in range(0, self.TOTAL_COPS):
             self.Xlist.append(self.num)
-            self.num += 400
+            self.num += 250
         self.num = 0
         
         self.index = 0
@@ -156,7 +156,7 @@ class L1(object):
             self.tools.countScore(self.score)
             self.tools.countAmmo(self.ammo, self.currentWeapon)
             self.sound, self.paused, self.reaload = self.tools.addButtons(self.sound, None)
-            self.hit = self.tools.health(self.hit)
+            self.tools.health(self.lifeLeft)
     
             self.dropDownGun, self.currentWeapon = self.gunMenu.chooseGun(self.windowSurface, self.dropDownGun, self.currentWeapon)
             self.dropDownTool, self.currentTool = self.toolMenu.chooseTool(self.windowSurface, self.dropDownTool, self.currentTool)    
@@ -189,8 +189,9 @@ class L1(object):
                         self.currentWeapon, self.lifeLeft)
                     
 
-                self.score, self.ammo = self.ammoBoxes.ammoBox(self.ammoBoxCoords[0], self.ammoBoxCoords[1], self.DrTaco.get_rect(),
+                self.score, self.ammo = self.supplies.ammoBox(self.ammoBoxCoords[0], 490, self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
+                self.score, self.lifeLeft = self.supplies.healthBox(400, 490, self.DrTaco.get_rect(), self.lifeLeft, self.sound, self.score)
 
                 self.index = 0
                 for cop in self.copList:                

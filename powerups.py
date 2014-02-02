@@ -61,7 +61,7 @@ Use the Powerups class in the Toolbar class.
 
             if rect[0] in range(self.ammoBoxRect[0] - 50, self.ammoBoxRect[0] + 50):
                 score += 25
-                ammo += 15
+                ammo += 25
                 if sound:
                     self.sound.play()
                 self.clear = True
@@ -81,18 +81,22 @@ Use the Powerups class in the Toolbar class.
             self.sound.play()
             return self.score
         
-    def healthBox(self, x, y, rect, health):
+    def healthBox(self, x, y, rect, health, sound, score):
         self.healthBoxImage = pygame.image.load('powerups\\healthBox.png')
         self.healthBoxRect = self.healthBoxImage.get_rect()
         self.healthBoxRect[0] = x
         self.healthBoxRect[1] = y
-        self.windowSurface.blit(self.healthBoxImage, self.healthBoxRect)
+        if self.clear == False:
+            self.windowSurface.blit(self.healthBoxImage, self.healthBoxRect)
 
-        if rect.colliderect(self.healthBoxRect):
-            health += 50
-            self.score += 50
-            self.sound.play()
-            return self.score, health
+            if rect[0] in range(self.healthBoxRect[0] - 50, self.healthBoxRect[0] + 50):
+                score += 25
+                health -= 5
+                if sound:
+                    self.sound.play()
+                self.clear = True
+
+        return score, health
     
     def TNT(self):
         pass

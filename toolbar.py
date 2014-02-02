@@ -50,15 +50,55 @@ class Toolbar(Button):
         self.scoreRect[0] = 100
         self.windowSurface.blit(self.scoreText, self.scoreRect)
         
-    def health(self, hit):
-        if hit:
-            self.healthBarLength -= 10
-            hit = False
+    def health(self, lifeLeft):
+        #Set health bar length
+        if lifeLeft == 1:
+            self.healthBarLength = 190
+        if lifeLeft == 2:
+            self.healthBarLength = 180
+        if lifeLeft == 3:
+            self.healthBarLength = 170
+        if lifeLeft == 4:
+            self.healthBarLength = 160
+        if lifeLeft == 5:
+            self.healthBarLength = 150
+        if lifeLeft == 6:
+            self.healthBarLength = 140
+        if lifeLeft == 7:
+            self.healthBarLength = 130
+        if lifeLeft == 8:
+            self.healthBarLength = 120
+        if lifeLeft == 9:
+            self.healthBarLength = 110
+        if lifeLeft == 10:
+            self.healthBarLength = 100
+        if lifeLeft == 11:
+            self.healthBarLength = 90
+        if lifeLeft == 12:
+            self.healthBarLength = 80
+        if lifeLeft == 13:
+            self.healthBarLength = 70
+        if lifeLeft == 14:
+            self.healthBarLength = 60
+        if lifeLeft == 15:
+            self.healthBarLength = 50
+        if lifeLeft == 16:
+            self.healthBarLength = 40
+        if lifeLeft == 17:
+            self.healthBarLength = 30
+        if lifeLeft == 18:
+            self.healthBarLength = 20
+        if lifeLeft == 19:
+            self.healthBarLength = 10
+        if lifeLeft == 20:
+            self.healthBarLength = 0
+            
+            
         if self.healthBarLength < 50:
             self.healthBarColor = self.RED
         if self.healthBarLength < 0:
             self.healthBarLength = 0
-        
+
         self.healthBar = {'rect':pygame.Rect(900, 10, self.healthBarLength, 20),'color':self.healthBarColor}
         pygame.draw.rect(self.windowSurface, self.healthBar['color'], self.healthBar['rect'])
 
@@ -68,11 +108,7 @@ class Toolbar(Button):
         self.healthRect[0] = 900
         self.healthRect[1] = 40
         self.windowSurface.blit(self.healthText, self.healthRect)
-
-        return hit
         
-
-
     def countAmmo(self, ammo, currentWeapon):
         ammo = str(ammo)      
         if currentWeapon == 'flamethrower':
