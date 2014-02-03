@@ -73,7 +73,11 @@ class L1(object):
         self.gunArrowButton = Button(self.windowSurface)
         self.toolArrowButton = Button(self.windowSurface)
         self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
-        self.supplies = Powerups(self.windowSurface, self.score)
+        self.ammoBox = Powerups(self.windowSurface, self.score)
+        self.healthBox = Powerups(self.windowSurface, self.score)
+        self.taco = Powerups(self.windowSurface, self.score)
+        self.tacoCoords = [1000, 490]
+        
         self.wingame = Popups(self.windowSurface)
         
         self.ammoBoxCoords = [600, 490]
@@ -100,7 +104,7 @@ class L1(object):
         while self.runGame == True:
             #Setup rect list and blit background
             self.reload = False
-            self.rectList = [self.ammoBoxCoords]
+            self.rectList = [self.ammoBoxCoords, self.tacoCoords]
             self.rectList, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
 
             #Setup all the cops gun position.
@@ -189,9 +193,10 @@ class L1(object):
                         self.currentWeapon, self.lifeLeft)
                     
 
-                self.score, self.ammo = self.supplies.ammoBox(self.ammoBoxCoords[0], 490, self.DrTaco.get_rect(),
+                self.score, self.ammo = self.ammoBox.ammoBox(self.ammoBoxCoords[0], 490, self.DrTaco.get_rect(),
                                                                 self.ammo, self.score, self.sound)
-                self.score, self.lifeLeft = self.supplies.healthBox(400, 490, self.DrTaco.get_rect(), self.lifeLeft, self.sound, self.score)
+                self.score, self.lifeLeft = self.healthBox.healthBox(400, 490, self.DrTaco.get_rect(), self.lifeLeft, self.sound, self.score)
+                self.score = self.taco.taco(self.tacoCoords[0], self.tacoCoords[1], self.DrTaco.get_rect(), self.sound, self.score)
 
                 self.index = 0
                 for cop in self.copList:                

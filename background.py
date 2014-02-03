@@ -9,29 +9,45 @@ pygame.init()
 class Background(object):
     def __init__(self):
         self.farLeft = True
+        self.SPEED = 2
     def move(self, buildings, moveRight, moveLeft, cops, rects, centered):
+        #If Dr. Taco is in the center of the screen, continue
         if centered:
             if buildings[0][0] >= 250:
                 self.farLeft = False
             else:
                 self.farLeft = True
+
+            #If Dr. Taco is moving right, move buildings, cops, and supplies right.
             if moveRight:
+                #Move buildings
                 for i in buildings:
-                    i[0] -= 2
+                    i[0] -= self.SPEED
+                #Move Cops
                 self.index = 0
                 for x in cops:
-                    x.get_rect()[0] -= 2
+                    x.get_rect()[0] -= self.SPEED
                     self.index += 1
+                #Move Supplies
+                for y in rects:
+                    y[0] -= self.SPEED
+            #If Dr. Taco is moving right, move buildings, cops, and supplies left.
             if moveLeft and self.farLeft:
+                #Move Buildings
                 for i in buildings:
-                    i[0] += 2
+                    i[0] += self.SPEED
+                #Move Cops
                 self.index = 0
                 for x in cops:
-                    x.get_rect()[0] += 2
+                    x.get_rect()[0] += self.SPEED
                     self.index += 1
+                #Move Supplies
+                    for y in rects:
+                        y[0] += self.SPEED
                 
 class Level_1(Background):
     def __init__(self, surface):
+        self.SPEED = 2
         #Setup important values
         self.windowSurface = surface
         #Setup Bannanabees Image

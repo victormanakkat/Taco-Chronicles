@@ -49,6 +49,7 @@ Use the Powerups class in the Toolbar class.
         self.score = score
         self.clear = False
         self.sound = pygame.mixer.Sound('sound\\powerupSound.wav')
+        self.munch = pygame.mixer.Sound('sound\\munch.wav')
         
 
     def ammoBox(self, x, y, rect, ammo, score, sound):
@@ -68,19 +69,23 @@ Use the Powerups class in the Toolbar class.
         return score, ammo
 
 
-    def taco(self, x, y, rect):
+    def taco(self, x, y, rect, sound, score):
         self.tacoImage2 = pygame.image.load('powerups\\taco.png')
         self.tacoImage = pygame.transform.scale(self.tacoImage2, (50, 20))
         self.tacoRect = self.tacoImage.get_rect()
         self.tacoRect[0] = x
         self.tacoRect[1] = y
-        self.windowSurface.blit(self.tacoImage, self.tacoRect)
 
-        if rect.colliderect(self.tacoRect):
-            self.score += 100
-            self.sound.play()
-            return self.score
-        
+        if self.clear == False:
+            self.windowSurface.blit(self.tacoImage, self.tacoRect)
+
+            if rect[0] in range(self.tacoRect[0] - 50, self.tacoRect[0] + 50):
+                    score += 7
+                    if sound:
+                        self.munch.play()
+                    self.clear = True
+        return score
+
     def healthBox(self, x, y, rect, health, sound, score):
         self.healthBoxImage = pygame.image.load('powerups\\healthBox.png')
         self.healthBoxRect = self.healthBoxImage.get_rect()
