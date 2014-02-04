@@ -1,6 +1,6 @@
 #Creating the level 1 class
 #By Tyler Spadgenske
-import pygame, sys
+import pygame, sys, random
 from pygame.locals import *
 
 #import custom classes
@@ -19,7 +19,6 @@ class L1(object):
     def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
 
         #Create game data
-        self.TOTAL_COPS = 32
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
@@ -27,16 +26,21 @@ class L1(object):
 
         #Constants
         self.BPS = 8 #(Bullets Per Second)
+        self.TOTAL_SUPPLIES = 10 #Total Supplies for each powerup
+        self.SKY_BLUE = SKY_BLUE #Sky color
+        self.TOTAL_COPS = 32 #Total number of all cops in level
         #Variables
         self.windowSurface = windowSurface
         self.clock = mainClock
-        self.SKY_BLUE = SKY_BLUE
+        #Setup Dr. Taco's Direction
         self.moveRight = False
         self.moveLeft = False
+        #Set Start Weapon and tool, and make sure menus are closed.
         self.currentWeapon = '9mm'
         self.currentTool = 'crowbar'
         self.dropDownGun = False
         self.dropDownTool = False
+        #Set Basic Values
         self.score = 0
         self.ammo = 50
         self.hit = False
@@ -73,40 +77,52 @@ class L1(object):
         self.gunArrowButton = Button(self.windowSurface)
         self.toolArrowButton = Button(self.windowSurface)
         self.DrTaco = Person('Doctor Taco', self.windowSurface, self.officerX, self.officerGunX)
-        self.ammoBox = Powerups(self.windowSurface, self.score)
-        self.healthBox = Powerups(self.windowSurface, self.score)
-        self.taco = Powerups(self.windowSurface, self.score)
-        self.tacoCoords = [1000, 490]
         
         self.wingame = Popups(self.windowSurface)
-        
-        self.ammoBoxCoords = [600, 490]
+
+        #Default lists
         self.copList = []
         self.Xlist = []
         self.num = 700
+        #Add a cop every 250 pixels for the range in TOTAL_COPS
         for i in range(0, self.TOTAL_COPS):
             self.Xlist.append(self.num)
             self.num += 250
         self.num = 0
-        
+
+        #Add the cop object
         self.index = 0
         for cop in range(0, self.TOTAL_COPS):
             self.copList.append(AI(self.windowSurface, self.skill_level, self.Xlist[self.index]))
             self.index += 1
 
+        #Add the cops gun
         self.index = 0
         for i in range(0, self.TOTAL_COPS):
             self.gunXlist.append({'right':abs(self.Xlist[self.index]) + 45, 'left':self.Xlist[self.index] + 7})
             self.index += 1
 
+        #Add Supplies to random locations
+        self.healthX = []
+        self.tacosX = []
+        self.ammoX = []
+        self.ammoBoxes = []
+        self.healthBoxes = []
+        self.tacos = []
+        for i in range(0, self.TOTAL_SUPPLIES):
+            self.ammoBoxes.append(Powerups(self.windowSurface, self.score))
+            self.healthBoxes.append(Powerups(self.windowSurface, self.score))
+            self.tacos.append(Powerups(self.windowSurface, self.score))
+            self.tacosX.append(random.randint(300, 9000))
+            self.healthX.append(random.randint(300, 9000))
+            self.ammoX.append(random.randint(300, 9000))
+        
     def play(self):
         #If there is no quit event, (i.e reload or back)
         while self.runGame == True:
             #Setup rect list and blit background
             self.reload = False
-            self.rectList = [self.ammoBoxCoords, self.tacoCoords]
-            self.rectList, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.rectList, self.copList, self.centered)
-
+            self.ammoX, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.ammoX, self.copList, self.centered)
             #Setup all the cops gun position.
             self.index = 0
             for cop in self.copList:
@@ -153,66 +169,79 @@ class L1(object):
                 if self.rapidFire[1]:
                     if self.currentWeapon == 'AK-47':
                         self.shootBullet = True
-            
+
+            #Add Health bar, score, message box, buttons, and ammo text to screen
             self.tools.display()
-    
             self.tools.messageBox(self.message)
             self.tools.countScore(self.score)
             self.tools.countAmmo(self.ammo, self.currentWeapon)
             self.sound, self.paused, self.reaload = self.tools.addButtons(self.sound, None)
             self.tools.health(self.lifeLeft)
-    
+
+            #Blit select gun menu, select tool menu, and drop down arrows to screen and allow user to select weapon (or gun)
             self.dropDownGun, self.currentWeapon = self.gunMenu.chooseGun(self.windowSurface, self.dropDownGun, self.currentWeapon)
             self.dropDownTool, self.currentTool = self.toolMenu.chooseTool(self.windowSurface, self.dropDownTool, self.currentTool)    
             self.gunArrowButton.blitArrow(self.windowSurface, self.dropDownGun, self.gunButtonCoords)
             self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
 
+            #If game is not paused, let Dr. Taco walk, jump, and shoot selected weapon
             if self.paused != True:
+                #Make it so Dr. Taco can jump and move
                 self.takeStep, self.centered = self.DrTaco.walk(self.takeStep, self.direction, self.moveLeft, self.moveRight, self.currentWeapon)
                 self.goUp = self.DrTaco.jump(self.goUp)
+                #If weapon is the Pistol, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == '9mm':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootPistol(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         lifeLeft = self.lifeLeft)
+                #If weapon is the Shotgun, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == 'shotgun':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootShotgun(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         lifeLeft = self.lifeLeft)
+                #If weapon is the AK-47, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == 'AK-47':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootAK(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         lifeLeft = self.lifeLeft)
                     self.shootBullet = False
+                #If weapon is the bazooka, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == 'bazooka':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootBazooka(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         self.currentWeapon, lifeLeft = self.lifeLeft)
+                #If weapon is the flamethrower, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == 'flamethrower':
                     self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootFlame(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         self.currentWeapon, self.lifeLeft)
-                    
+                
 
-                self.score, self.ammo = self.ammoBox.ammoBox(self.ammoBoxCoords[0], 490, self.DrTaco.get_rect(),
-                                                                self.ammo, self.score, self.sound)
-                self.score, self.lifeLeft = self.healthBox.healthBox(400, 490, self.DrTaco.get_rect(), self.lifeLeft, self.sound, self.score)
-                self.score = self.taco.taco(self.tacoCoords[0], self.tacoCoords[1], self.DrTaco.get_rect(), self.sound, self.score)
-
+                #Make all the cops think
                 self.index = 0
                 for cop in self.copList:                
                     self.hit, self.endReload, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
                                                          self.drop, self.hit, self.sound, self.lifeLeft)
+                    #If Dr. Taco is dead break out of loop
                     if self.endReload:
                         break
-                    
                     self.index += 1
 
+            self.index = 0
+            for box in self.ammoBoxes:
+                self.score, self.ammo = box.ammoBox(self.ammoX[self.index], 490, self.DrTaco.get_rect(), self.ammo, self.score, self.sound)
+                self.index += 1
+
+            #If Dr. Taco has reached the end of the level, display level completed popup and exit loop
             if self.endPoint < 298:
                 self.endReload, self.back = self.wingame.wingame(self.score, self.tacosCollected)
 
+            #Update screen and fill background
             pygame.display.update()
             self.clock.tick()
             self.windowSurface.fill(self.SKY_BLUE)
+
+            #If reload button is clicked exit loop and enter another object
             if self.endReload:
                 self.runGame = False
                 self.reload = True
@@ -220,4 +249,3 @@ class L1(object):
                 self.runGame = False
 
         return self.reload
-

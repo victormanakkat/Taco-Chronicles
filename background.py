@@ -29,8 +29,8 @@ class Background(object):
                     x.get_rect()[0] -= self.SPEED
                     self.index += 1
                 #Move Supplies
-                for y in rects:
-                    y[0] -= self.SPEED
+                for i in range(0, len(rects)):
+                    rects[i] -= self.SPEED
             #If Dr. Taco is moving right, move buildings, cops, and supplies left.
             if moveLeft and self.farLeft:
                 #Move Buildings
@@ -42,12 +42,13 @@ class Background(object):
                     x.get_rect()[0] += self.SPEED
                     self.index += 1
                 #Move Supplies
-                    for y in rects:
-                        y[0] += self.SPEED
+                for i in range(0, len(rects)):
+                    rects[i] += self.SPEED
                 
 class Level_1(Background):
     def __init__(self, surface):
         self.SPEED = 2
+        self.moveStuff = Background()
         #Setup important values
         self.windowSurface = surface
         #Setup Bannanabees Image
@@ -145,7 +146,7 @@ class Level_1(Background):
             self.windowSurface.blit(self.consPizzaImage, self.consPizzaRect)
         if self.TacoBellRect[0] > -900:
             self.windowSurface.blit(self.TacoBellImage, self.TacoBellRect)
-        super(Level_1, self).move(self.L1Buildings, moveRight, moveLeft, copList, rectList, centered)
+        self.moveStuff.move(self.L1Buildings, moveRight, moveLeft, copList, rectList, centered)
         return rectList, self.TacoBellRect[0]
 
 class Level_2(Background):
@@ -179,8 +180,6 @@ class Level_2(Background):
             self.windowSurface.blit(self.centralParkImage, self.centralParkRect)
 
         super(Level_2, self).move(self.L2Buildings, moveRight, moveLeft, rectList, centered)
-        return rectList
-    
 class Level_3():
     def __init__():
          pass
