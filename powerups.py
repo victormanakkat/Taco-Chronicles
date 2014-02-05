@@ -62,14 +62,14 @@ Use the Powerups class in the Toolbar class.
 
             if rect[0] in range(self.ammoBoxRect[0] - 50, self.ammoBoxRect[0] + 50):
                 score += 25
-                ammo += 25
+                ammo += 15
                 if sound:
                     self.sound.play()
                 self.clear = True
         return score, ammo
 
 
-    def taco(self, x, y, rect, sound, score):
+    def taco(self, x, y, rect, sound, score, tacosCollected):
         self.tacoImage2 = pygame.image.load('powerups\\taco.png')
         self.tacoImage = pygame.transform.scale(self.tacoImage2, (50, 20))
         self.tacoRect = self.tacoImage.get_rect()
@@ -79,12 +79,13 @@ Use the Powerups class in the Toolbar class.
         if self.clear == False:
             self.windowSurface.blit(self.tacoImage, self.tacoRect)
 
-            if rect[0] in range(self.tacoRect[0] - 50, self.tacoRect[0] + 50):
+            if rect.collidepoint(x, y):
                     score += 7
+                    tacosCollected += 1
                     if sound:
                         self.munch.play()
                     self.clear = True
-        return score
+        return score, tacosCollected
 
     def healthBox(self, x, y, rect, health, sound, score):
         self.healthBoxImage = pygame.image.load('powerups\\healthBox.png')

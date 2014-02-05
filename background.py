@@ -51,7 +51,7 @@ class Background(object):
                 for i in range(0, len(healthX)):
                     healthX[i] += self.SPEED
                 for i in range(0, len(tacoX)):
-                    tacoX[i] -= self.SPEED
+                    tacoX[i] += self.SPEED
                 
 class Level_1(Background):
     def __init__(self, surface):

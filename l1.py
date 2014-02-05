@@ -42,7 +42,7 @@ class L1(object):
         self.dropDownTool = False
         #Set Basic Values
         self.score = 0
-        self.ammo = 50
+        self.ammo = 30
         self.hit = False
         self.gunButtonCoords = [695, 30, 735, 30, 715, 50]
         self.toolButtonCoords = [395, 30, 435, 30, 415, 50]
@@ -105,6 +105,7 @@ class L1(object):
         #Add Supplies to random locations
         self.healthX = []
         self.tacosX = []
+        self.tacosY = []
         self.ammoX = []
         self.ammoBoxes = []
         self.healthBoxes = []
@@ -115,6 +116,7 @@ class L1(object):
             for i in range(0, 2):
                 self.tacos.append(Powerups(self.windowSurface, self.score))
                 self.tacosX.append(random.randint(300, 9000))
+                self.tacosY.append(random.randint(300, 490))
             self.healthX.append(random.randint(300, 9000))
             self.ammoX.append(random.randint(300, 9000))
         
@@ -239,7 +241,8 @@ class L1(object):
                 self.index += 1
             self.index = 0
             for box in self.tacos:
-                self.score = box.taco(self.tacosX[self.index], 490, self.DrTaco.get_rect(), self.sound, self.score)
+                self.score, self.tacosCollected = box.taco(self.tacosX[self.index], self.tacosY[self.index],
+                                                           self.DrTaco.get_rect(), self.sound, self.score, self.tacosCollected)
                 self.index += 1
 
             #If Dr. Taco has reached the end of the level, display level completed popup and exit loop
