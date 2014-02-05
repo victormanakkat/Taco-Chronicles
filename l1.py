@@ -24,6 +24,9 @@ class L1(object):
         self.sound = gameData['sound']
         self.runGame = True
 
+        #Setup theme music
+        pygame.mixer.music.load('sound//gameTheme.mp3')
+
         #Constants
         self.BPS = 8 #(Bullets Per Second)
         self.TOTAL_SUPPLIES = 10 #Total Supplies for each powerup
@@ -68,6 +71,7 @@ class L1(object):
         self.endPoint = 0
         self.back = False
         self.tacosCollected = 0
+        self.first = True
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -119,7 +123,7 @@ class L1(object):
                 self.tacosY.append(random.randint(300, 490))
             self.healthX.append(random.randint(300, 9000))
             self.ammoX.append(random.randint(300, 9000))
-        
+
     def play(self):
         #If there is no quit event, (i.e reload or back)
         while self.runGame == True:
@@ -256,9 +260,19 @@ class L1(object):
 
             #If reload button is clicked exit loop and enter another object
             if self.endReload:
+                pygame.mixer.music.stop()
                 self.runGame = False
                 self.reload = True
             if self.reload:
+                pygame.mixer.music.stop()
                 self.runGame = False
 
+            #Play music
+            if self.sound == True:
+                if self.first:
+                    pygame.mixer.music.play(-1, 0.0)
+                    self.first = False
+            else:
+                pygame.mixer.music.stop()
+                self.first = True
         return self.reload
