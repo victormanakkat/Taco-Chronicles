@@ -265,7 +265,7 @@ weapons, and shoots bullets on command.
                                 
                     if self.character == 'Doctor Taco':
                         #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
-                        if self.wound >= self.SHOTS_TILL_COPS_DEATH:
+                        if self.wound >= self.SHOTS_TILL_COPS_DEATH and len(bulletList) == 0:
                             if self.character == 'Doctor Taco':
                                 message = 'Nice Shot!'
                                 score += 100

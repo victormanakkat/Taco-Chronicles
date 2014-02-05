@@ -96,6 +96,8 @@ class Toolbar(Button):
             
         if self.healthBarLength < 50:
             self.healthBarColor = self.RED
+        if self.healthBarLength > 50:
+            self.healthBarColor = self.GREEN
         if self.healthBarLength < 0:
             self.healthBarLength = 0
 

@@ -29,7 +29,7 @@ class L1(object):
 
         #Constants
         self.BPS = 8 #(Bullets Per Second)
-        self.TOTAL_SUPPLIES = 10 #Total Supplies for each powerup
+        self.TOTAL_SUPPLIES = 12 #Total Supplies for each powerup
         self.SKY_BLUE = SKY_BLUE #Sky color
         self.TOTAL_COPS = 32 #Total number of all cops in level
         #Variables
@@ -235,6 +235,7 @@ class L1(object):
                         break
                     self.index += 1
 
+            #Blit all the supplies to the screen by running their functions
             self.index = 0
             for box in self.ammoBoxes:
                 self.score, self.ammo = box.ammoBox(self.ammoX[self.index], 490, self.DrTaco.get_rect(), self.ammo, self.score, self.sound)
@@ -252,6 +253,9 @@ class L1(object):
             #If Dr. Taco has reached the end of the level, display level completed popup and exit loop
             if self.endPoint < 298:
                 self.endReload, self.back = self.wingame.wingame(self.score, self.tacosCollected)
+            #If the health bar length is too much set it to right size
+            if self.lifeLeft >= 20:
+                self.lifeLeft = 20
 
             #Update screen and fill background
             pygame.display.update()

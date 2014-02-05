@@ -66,7 +66,8 @@ and another boolean the determins if it should play sound.'''
                 if baddieX - x[0] <= 398:
                     self.walkLeft = False
                     self.walkRight = False
-                    if self.time == 20:
+                if baddieX - x[0] <= 500:
+                    if self.time == 10:
                         self.shoot = True
 
             #Deside whether to walk right or shoot right
@@ -81,7 +82,8 @@ and another boolean the determins if it should play sound.'''
                     self.direction = 1
                     self.walkLeft = False
                     self.walkRight = False
-                    if self.time == 30:
+                if baddieX - x[0] >= 500:
+                    if self.time == 10:
                         self.shoot = True
       
             self.takeStep, self.centered = super(AI, self).walk(self.takeStep, self.direction, self.walkLeft, self.walkRight, '9mm', baddieX) 
@@ -89,7 +91,7 @@ and another boolean the determins if it should play sound.'''
                                                                                                                        self.direction, baddieGunX, sound, x,
                                                                                                                        lifeLeft = lifeLeft)
 
-        if self.time == 30:
+        if self.time == 10:
             self.time = 0
 
         return hit, self.reload, lifeLeft
