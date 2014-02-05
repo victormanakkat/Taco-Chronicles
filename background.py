@@ -10,7 +10,7 @@ class Background(object):
     def __init__(self):
         self.farLeft = True
         self.SPEED = 2
-    def move(self, buildings, moveRight, moveLeft, cops, rects, centered):
+    def move(self, buildings, moveRight, moveLeft, cops, ammoX, healthX, centered):
         #If Dr. Taco is in the center of the screen, continue
         if centered:
             if buildings[0][0] >= 250:
@@ -29,8 +29,10 @@ class Background(object):
                     x.get_rect()[0] -= self.SPEED
                     self.index += 1
                 #Move Supplies
-                for i in range(0, len(rects)):
-                    rects[i] -= self.SPEED
+                for i in range(0, len(ammoX)):
+                    ammoX[i] -= self.SPEED
+                for i in range(0, len(healthX)):
+                    healthX[i] -= self.SPEED
             #If Dr. Taco is moving right, move buildings, cops, and supplies left.
             if moveLeft and self.farLeft:
                 #Move Buildings
@@ -42,8 +44,10 @@ class Background(object):
                     x.get_rect()[0] += self.SPEED
                     self.index += 1
                 #Move Supplies
-                for i in range(0, len(rects)):
-                    rects[i] += self.SPEED
+                for i in range(0, len(ammoX)):
+                    ammoX[i] += self.SPEED
+                for i in range(0, len(healthX)):
+                    healthX[i] += self.SPEED
                 
 class Level_1(Background):
     def __init__(self, surface):
@@ -123,7 +127,7 @@ class Level_1(Background):
                             self.apt4Rect, self.TVLandRect, self.PoliceStationRect, self.treeRect, self.consPizzaRect,
                             self.TacoBellRect]
                      
-    def blitBackground(self, moveRight, moveLeft, rectList, copList, centered):
+    def blitBackground(self, moveRight, moveLeft, ammoX, healthX, copList, centered):
         if self.bananaBeesRect[0] > -536:
             self.windowSurface.blit(self.bananaBeesImage, self.bananaBeesRect)
         if self.fireStationRect[0] > -995:
@@ -146,8 +150,8 @@ class Level_1(Background):
             self.windowSurface.blit(self.consPizzaImage, self.consPizzaRect)
         if self.TacoBellRect[0] > -900:
             self.windowSurface.blit(self.TacoBellImage, self.TacoBellRect)
-        self.moveStuff.move(self.L1Buildings, moveRight, moveLeft, copList, rectList, centered)
-        return rectList, self.TacoBellRect[0]
+        self.moveStuff.move(self.L1Buildings, moveRight, moveLeft, copList, ammoX, healthX, centered)
+        return ammoX, healthX, self.TacoBellRect[0]
 
 class Level_2(Background):
     def  __init__(self, surface):

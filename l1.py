@@ -122,7 +122,7 @@ class L1(object):
         while self.runGame == True:
             #Setup rect list and blit background
             self.reload = False
-            self.ammoX, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.ammoX, self.copList, self.centered)
+            self.ammoX, self.healthX, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.ammoX, self.healthX, self.copList, self.centered)
             #Setup all the cops gun position.
             self.index = 0
             for cop in self.copList:
@@ -230,6 +230,10 @@ class L1(object):
             self.index = 0
             for box in self.ammoBoxes:
                 self.score, self.ammo = box.ammoBox(self.ammoX[self.index], 490, self.DrTaco.get_rect(), self.ammo, self.score, self.sound)
+                self.index += 1
+            self.index = 0
+            for box in self.healthBoxes:
+                self.score, self.lifeLeft = box.healthBox(self.healthX[self.index], 490, self.DrTaco.get_rect(), self.lifeLeft, self.sound, self.score)
                 self.index += 1
 
             #If Dr. Taco has reached the end of the level, display level completed popup and exit loop
