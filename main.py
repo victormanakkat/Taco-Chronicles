@@ -1,8 +1,11 @@
-
 # main.py
 # By Tyler Spadgenske
 VERSION = '0.1.0'
 
+#Really important values
+showFPS = True
+
+#Import modules
 import pygame, sys, os
 from pygame.locals import *
 
@@ -45,7 +48,7 @@ restart = True
 l1List = []
 Intro(windowSurface)
 for i in range(0, 19):
-    l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData))
+    l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
 
 
 #Run the gameplay

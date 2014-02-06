@@ -16,13 +16,14 @@ from baddieAI import AI
 from popups import Popups
 
 class L1(object):
-    def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData):
+    def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData, showFPS):
 
         #Create game data
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
         self.sound = gameData['sound']
         self.runGame = True
+        self.showFPS = showFPS
 
         #Setup theme music
         pygame.mixer.music.load('sound//gameTheme.mp3')
@@ -191,6 +192,10 @@ class L1(object):
             self.dropDownTool, self.currentTool = self.toolMenu.chooseTool(self.windowSurface, self.dropDownTool, self.currentTool)    
             self.gunArrowButton.blitArrow(self.windowSurface, self.dropDownGun, self.gunButtonCoords)
             self.toolArrowButton.blitArrow(self.windowSurface, self.dropDownTool, self.toolButtonCoords)
+
+            #Get Frames per second and and it to screen
+            self.fps = int(self.clock.get_fps())
+            self.tools.FPS(self.fps, self.showFPS)
 
             #If game is not paused, let Dr. Taco walk, jump, and shoot selected weapon
             if self.paused != True:

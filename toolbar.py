@@ -173,3 +173,12 @@ class Toolbar(Button):
                 self.soundIcon = 'sound on'
 
         return sound, self.paused, self.reload
+
+    def FPS(self, FPS = 'Error', display = False):
+        self.fpsText = self.ammoFont.render('FPS: ' + str(FPS), True, self.WHITE, self.ORANGE)
+        self.fpsRect = self.fpsText.get_rect()
+        self.fpsRect.centerx = self.windowSurface.get_rect().centerx + 535
+        self.fpsRect.centery = self.windowSurface.get_rect().centery - 240
+        if display:
+            self.windowSurface.blit(self.fpsText, self.fpsRect)
+        
