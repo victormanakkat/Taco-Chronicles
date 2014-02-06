@@ -9,7 +9,7 @@ pygame.init()
 class Background(object):
     def __init__(self):
         self.farLeft = True
-        self.SPEED = 2
+        self.SPEED = 5
     def move(self, buildings, moveRight, moveLeft, cops, ammoX, healthX, tacoX, centered):
         #If Dr. Taco is in the center of the screen, continue
         if centered:

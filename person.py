@@ -18,7 +18,7 @@ weapons, and shoots bullets on command.
     def __init__(self, character, windowSurface, officerX, officerGunX, officerType = 'sheriff'):
         self.JUMP_SPEED = 5 #Must be multiple of "self.JUMP_HEIGHT"
         self.JUMP_HEIGHT = -120 #In pixels Remember, it must be lower than zero.
-        self.MOVING_SPEED = 6 #Pixels per loop rotation
+        self.MOVING_SPEED = 10 #Pixels per loop rotation
         self.SHOTS_TILL_COPS_DEATH = 5
         self._SHOTS_TILL_TACOS_DEATH = 20
         self.x = 100
