@@ -21,6 +21,7 @@ from powerups import Powerups
 from baddieAI import AI
 from l1 import L1
 from intro import Intro
+from screen import Screen
 
 #Setup the main screen display and clock
 pygame.init()
@@ -50,6 +51,16 @@ Intro(windowSurface)
 for i in range(0, 19):
     l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
 
+start = Screen(windowSurface)
+clicked = False
+windowSurface.fill((255, 255, 255))
+pygame.mixer.music.load('sound//gameTheme.mp3')
+pygame.mixer.music.play(-1, 0.0)
+while True:
+    clicked = start.startScreen(123, clicked)
+    if clicked:
+        break
+pygame.mixer.music.stop()
 
 #Run the gameplay
 for i in l1List:

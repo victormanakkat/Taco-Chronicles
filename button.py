@@ -15,7 +15,10 @@ class Button:
         self.back = False
         self.enlarge_sound = False
         self.enlarge_pause = False
-        
+
+        #Setup stuff for startButton()
+        self.comicFont = pygame.font.Font('fonts//font.ttf', 60)
+        self.buttonColor = [self.WHITE, self.ORANGE]
     def arrow(self, clickedOn, event, coords): #coords example: [695, 30, 735, 30, 715, 50]
         #Detect whether the mouse is on the triangle, if
         #so, make triangle yellow. If you click, drop down the menu.
@@ -163,4 +166,23 @@ class Button:
                         return self.sound
                     if button == 'pause':
                         self.pause = True
-                        return self.pause    
+                        return self.pause
+
+    def startButton(self, clicked):
+        self.startText = self.comicFont.render('START', True, self.buttonColor[0], self.buttonColor[1])
+        self.startRect = self.startText.get_rect()
+        self.startRect.centerx = self.windowSurface.get_rect().centerx
+        self.startRect.centery = self.windowSurface.get_rect().centery
+        self.windowSurface.blit(self.startText, self.startRect)
+
+        for event in pygame.event.get():
+            if event.type == MOUSEMOTION:
+                if self.startRect.collidepoint(event.pos[0], event.pos[1]):
+                    self.buttonColor = [self.ORANGE, self.YELLOW]
+                else:
+                    self.buttonColor = [self.WHITE, self.ORANGE]
+            if event.type == MOUSEBUTTONDOWN:
+                if self.startRect.collidepoint(event.pos[0], event.pos[1]):
+                    clicked = True
+                    break
+        return clicked
