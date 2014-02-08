@@ -21,7 +21,7 @@ class Button:
         self.exit = False
 
         #Setup stuff for startButton()
-        self.comicFont = pygame.font.Font('fonts//font.ttf', 60)
+        self.comicFont = pygame.font.Font('fonts\\font.ttf', 60)
         self.buttonColor = [self.WHITE, self.ORANGE]
     def arrow(self, clickedOn, event, coords): #coords example: [695, 30, 735, 30, 715, 50]
         #Detect whether the mouse is on the triangle, if
