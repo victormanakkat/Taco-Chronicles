@@ -21,6 +21,7 @@ class Screen():
         self.titleRect = self.title.get_rect()
         self.titleRect.centerx = self.screen.get_rect().centerx
         self.titleRect.centery = self.screen.get_rect().centery - 180
+        self.exit = False
 
         #Setup Highscore text
         self.highscoreFont = pygame.font.Font('fonts//font.ttf', 30)
@@ -42,5 +43,5 @@ class Screen():
         self.screen.blit(self.title, self.titleRect)
         self.screen.blit(self.scoreText, self.scoreRect)
 
-        clicked = self.buttons.startButton(clicked)
-        return clicked
+        self.exit, clicked = self.buttons.startButton(clicked)
+        return clicked, self.exit

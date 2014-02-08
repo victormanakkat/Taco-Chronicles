@@ -467,7 +467,8 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect,
+                                                                                self.message, hit, lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -539,7 +540,8 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score,
+                                                                               target_rect, self.message, hit, lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -606,7 +608,7 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit,
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit,
                                                                      weapon, lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
@@ -684,7 +686,7 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die, lifeLeft = self.shot([self.flameRect], self.bulletDirection, score, target_rect, self.message, hit, 'flamethrower',
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot([self.flameRect], self.bulletDirection, score, target_rect, self.message, hit, 'flamethrower',
                                                                      lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction

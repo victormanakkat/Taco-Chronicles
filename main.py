@@ -22,7 +22,16 @@ from baddieAI import AI
 from l1 import L1
 from load import Load
 from screen import Screen
+from file import File
 
+#Setup game data
+getFiles = File()
+highscore, totalscore, firstRun, lockedGuns = getFiles.read()
+
+#Show Important information if program is run for first time
+if firstRun:
+    from installer import Install
+    firstRun = False
 #Setup the main screen display and clock
 pygame.init()
 
@@ -39,8 +48,6 @@ SKY_BLUE = (0, 255, 255)
 
 windowSurface.fill(SKY_BLUE)
 
-#Setup game data
-lockedGuns = {'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True, 'flamethrower':True}
 lockedTools = {'crowbar':False, 'rope':True, 'key':True, 'TNT':True, 'jetpack':True}
 sound = True
 gameData = {'sound':sound, 'lockedGuns':lockedGuns, 'lockedTools':lockedTools}
@@ -57,9 +64,14 @@ while True:
     pygame.mixer.music.play(-1, 0.0)
     windowSurface.fill((255, 255, 255))
     while True:
-        clicked = start.startScreen(123, clicked)
+        clicked, exit = start.startScreen(highscore, clicked)
         if clicked:
             break
+        if exit:
+            getFiles.write(highscore, totalscore, firstRun, lockedGuns)
+            pygame.quit()
+            sys.exit()
+        
     pygame.mixer.music.stop()
 
     l1List = []
@@ -69,11 +81,20 @@ while True:
     
     #Run the gameplay
     for i in l1List:
-        restart, goBack = i.play()
+        restart, goBack, highscore, totalscore = i.play(highscore, totalscore)
         if restart == False:
             break
         if goBack:
             break
+
+    if totalscore > 5000:
+        lockedGuns['shotgun'] = False
+    if totalscore > 10000:
+        lockedGuns['AK-47'] = False
+    if totalscore > 20000:
+        lockedGuns['bazooka'] = False
+    if totalscore > 25000:
+        lockedGuns['flamethrower'] = False
 
     
 

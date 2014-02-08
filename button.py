@@ -1,9 +1,12 @@
 # Button class 
 # By Tyler Spadgenske
+
+#Import modules
 import pygame
 from pygame.locals import *
 class Button:
     def __init__(self, windowSurface):
+        #Setup values
         self.windowSurface = windowSurface
         self.WHITE = (255, 255, 255)
         self.YELLOW = (255, 255, 0)
@@ -15,6 +18,7 @@ class Button:
         self.back = False
         self.enlarge_sound = False
         self.enlarge_pause = False
+        self.exit = False
 
         #Setup stuff for startButton()
         self.comicFont = pygame.font.Font('fonts//font.ttf', 60)
@@ -185,4 +189,6 @@ class Button:
                 if self.startRect.collidepoint(event.pos[0], event.pos[1]):
                     clicked = True
                     break
-        return clicked
+            if event.type == QUIT:
+                self.exit = True
+        return self.exit, clicked

@@ -14,10 +14,12 @@ from person import Person
 from powerups import Powerups
 from baddieAI import AI
 from popups import Popups
+from file import File
 
 class L1(object):
     def __init__(self, windowSurface, mainClock, SKY_BLUE, gameData, showFPS):
 
+        self.getFiles = File
         #Create game data
         self.lockedGuns = gameData['lockedGuns']
         self.lockedTools = gameData['lockedTools']
@@ -125,7 +127,7 @@ class L1(object):
             self.healthX.append(random.randint(300, 9000))
             self.ammoX.append(random.randint(300, 9000))
 
-    def play(self):
+    def play(self, highscore, totalscore):
         #If there is no quit event, (i.e reload or back)
         while self.runGame == True:
             #Setup rect list and blit background
@@ -285,6 +287,13 @@ class L1(object):
                 self.runGame = False
                 self.back = True
 
+            #Add score to total score
+            if self.runGame != True:
+                totalscore += self.score
+            #Check for high score
+            if highscore < self.score:
+                highscore = self.score
+
             #Play music
             if self.sound == True:
                 if self.first:
@@ -293,4 +302,4 @@ class L1(object):
             else:
                 pygame.mixer.music.stop()
                 self.first = True
-        return self.reload, self.back
+        return self.reload, self.back, highscore, totalscore
