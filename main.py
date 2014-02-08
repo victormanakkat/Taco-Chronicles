@@ -20,7 +20,7 @@ from person import Person
 from powerups import Powerups
 from baddieAI import AI
 from l1 import L1
-from intro import Intro
+from load import Load
 from screen import Screen
 
 #Setup the main screen display and clock
@@ -46,25 +46,35 @@ sound = True
 gameData = {'sound':sound, 'lockedGuns':lockedGuns, 'lockedTools':lockedTools}
 restart = True
 
-l1List = []
-Intro(windowSurface)
-for i in range(0, 19):
-    l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
-
 start = Screen(windowSurface)
 clicked = False
 windowSurface.fill((255, 255, 255))
 pygame.mixer.music.load('sound//gameTheme.mp3')
-pygame.mixer.music.play(-1, 0.0)
-while True:
-    clicked = start.startScreen(123, clicked)
-    if clicked:
-        break
-pygame.mixer.music.stop()
 
-#Run the gameplay
-for i in l1List:
-    restart = i.play()
-    if restart == False:
-        break
+while True:
+    restart = True
+    clicked = False
+    pygame.mixer.music.play(-1, 0.0)
+    windowSurface.fill((255, 255, 255))
+    while True:
+        clicked = start.startScreen(123, clicked)
+        if clicked:
+            break
+    pygame.mixer.music.stop()
+
+    l1List = []
+    Load(windowSurface)
+    for i in range(0, 19):
+        l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
+    
+    #Run the gameplay
+    for i in l1List:
+        restart, goBack = i.play()
+        if restart == False:
+            break
+        if goBack:
+            break
+
+    
+
 

@@ -139,7 +139,7 @@ class L1(object):
                 self.index += 1
                 
             for event in pygame.event.get():
-                self.sound, self.paused, self.reload = self.tools.addButtons(self.sound, event)
+                self.sound, self.paused, self.reload, self.back = self.tools.addButtons(self.sound, event)
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
@@ -184,7 +184,7 @@ class L1(object):
             self.tools.messageBox(self.message)
             self.tools.countScore(self.score)
             self.tools.countAmmo(self.ammo, self.currentWeapon)
-            self.sound, self.paused, self.reaload = self.tools.addButtons(self.sound, None)
+            self.sound, self.paused, self.reaload, self.backk = self.tools.addButtons(self.sound, None)
             self.tools.health(self.lifeLeft)
 
             #Blit select gun menu, select tool menu, and drop down arrows to screen and allow user to select weapon (or gun)
@@ -204,7 +204,7 @@ class L1(object):
                 self.goUp = self.DrTaco.jump(self.goUp)
                 #If weapon is the Pistol, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == '9mm':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootPistol(
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.val, self.lifeLeft = self.DrTaco.shootPistol(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
                         lifeLeft = self.lifeLeft)
                 #If weapon is the Shotgun, put it in Dr. Taco's hand and enable it for use.
@@ -233,10 +233,12 @@ class L1(object):
                 #Make all the cops think
                 self.index = 0
                 for cop in self.copList:                
-                    self.hit, self.endReload, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
+                    self.hit, self.endReload, self.endBack, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
                                                          self.drop, self.hit, self.sound, self.lifeLeft)
                     #If Dr. Taco is dead break out of loop
                     if self.endReload:
+                        break
+                    if self.endBack:
                         break
                     self.index += 1
 
@@ -275,6 +277,13 @@ class L1(object):
             if self.reload:
                 pygame.mixer.music.stop()
                 self.runGame = False
+            if self.back:
+                pygame.mixer.music.stop()
+                self.runGame = False
+            if self.endBack:
+                pygame.mixer.music.stop()
+                self.runGame = False
+                self.back = True
 
             #Play music
             if self.sound == True:
@@ -284,4 +293,4 @@ class L1(object):
             else:
                 pygame.mixer.music.stop()
                 self.first = True
-        return self.reload
+        return self.reload, self.back

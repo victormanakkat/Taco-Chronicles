@@ -276,12 +276,11 @@ weapons, and shoots bullets on command.
                     if self.character == 'officer':
                         if lifeLeft == self.SHOTS_TILL_TACOS_DEATH:
                             #If Dr. Taco is dead, end game
-                            self.endgame.endgame()
-                            self.die = True
+                            self.reload, self.back = self.endgame.endgame()
                             lifeLeft = -100
                             self.drop = True
                         
-        return score, message, hit, self.drop, lifeLeft
+        return score, message, hit, self.reload, self.back, lifeLeft
 
     def burned():
         pass
@@ -398,9 +397,11 @@ weapons, and shoots bullets on command.
 
         #If run self.shot() to move bullets and determin whether the person is dead
         if self.character == 'Doctor Taco':
-            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score,
+                                                                                target_rect, self.message, hit, lifeLeft = lifeLeft)
         if self.character == 'officer':
-            score, self.message, hit, self.die, lifeLeft = self.shot(self.bullets, self.bulletDirection, score, target_rect, self.message, hit, lifeLeft = lifeLeft)
+            score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score,
+                                                                                target_rect, self.message, hit, lifeLeft = lifeLeft)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -422,7 +423,7 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop, self.die, lifeLeft
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop, self.die, self.back, lifeLeft
 
     def shootAK(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None):
         #Get message box value

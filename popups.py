@@ -81,6 +81,7 @@ class Popups(object, Button):
                     
             if self.reload or self.back:
                 break
+        return self.reload, self.back
 
     def wingame(self, score, tacosCollected):
         while True:
