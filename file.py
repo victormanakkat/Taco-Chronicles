@@ -11,11 +11,9 @@ class File():
         try:
             self.data = pickle.load( open( "data.p", "rb" ))
         except:
-            print 'File Not found.'
             self.data = {'highscore': 0, 'totalscore': 0, 'firstRun': True, 'lockedGuns':{'9mm':False, 'shotgun':True, 'AK-47':True, 'bazooka':True,
                                                                                            'flamethrower':True}} 
             pickle.dump(self.data, open( "data.p", "wb" ) )
-            print 'New File Added.'
 
         self.data = pickle.load(open('data.p', 'rb'))
         self.highscore = self.data['highscore']

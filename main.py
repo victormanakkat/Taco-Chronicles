@@ -4,6 +4,7 @@ VERSION = '0.1.0'
 
 #Really important values
 showFPS = True
+TOTAL_OBJECTS = 9
 
 #Import modules
 import pygame, sys, os
@@ -76,15 +77,20 @@ while True:
 
     l1List = []
     Load(windowSurface)
-    for i in range(0, 19):
+    for i in range(0, TOTAL_OBJECTS):
         l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
     
     #Run the gameplay
+    count = 0
     for i in l1List:
         restart, goBack, highscore, totalscore = i.play(highscore, totalscore)
         if restart == False:
             break
         if goBack:
+            break
+        if restart:
+            count += 1
+        if count == len(l1List):
             break
 
     if totalscore > 10000:

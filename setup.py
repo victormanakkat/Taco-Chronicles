@@ -68,7 +68,8 @@ class BuildExe:
         self.icon_file = None
  
         #Extra files/dirs copied to game
-        self.extra_datas = ['Buildings//Apt1.png', 'Buildings//Apt2.png', 'Buildings//Apt3.png', 'Buildings//Apt4.png', 'Buildings//BananaBees.gif',
+        self.extra_datas = []
+        self.extra_datass = ['Buildings//Apt1.png', 'Buildings//Apt2.png', 'Buildings//Apt3.png', 'Buildings//Apt4.png', 'Buildings//BananaBees.gif',
                             'Buildings//consPizza.png', 'Buildings//TacoBell.png', 'Buildings//FireStation.png', 'Buildings//PoliceStation.png',
                             'Buildings//TV_LAND.png', 'Buildings//Tree.gif', 'Buttons//back.png', 'Buttons//reload.png', 'Buttons//soundOn.png',
                             'Buttons//soundOff.png', 'Characters//blownUp.gif', 'Characters//deputy.gif', 'Characters//deputyWalk.gif', 'Characters//DrTacoRight.gif',
