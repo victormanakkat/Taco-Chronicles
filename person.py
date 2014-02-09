@@ -1,6 +1,6 @@
 #Creating the Person class
 #By Tyler Spadgenske
-import pygame, sys
+import pygame, sys, random
 from pygame.locals import *
 pygame.init()
 
@@ -15,7 +15,7 @@ in the Taco Chronlicles. It creates the characters,
 including Dr. Taco, the main character. It handles the
 weapons, and shoots bullets on command.
 '''
-    def __init__(self, character, windowSurface, officerX, officerGunX, officerType = 'sheriff'):
+    def __init__(self, character, windowSurface, officerX, officerGunX):
         self.JUMP_SPEED = 5 #Must be multiple of "self.JUMP_HEIGHT"
         self.JUMP_HEIGHT = -120 #In pixels Remember, it must be lower than zero.
         self.MOVING_SPEED = 10 #Pixels per loop rotation
@@ -71,64 +71,47 @@ weapons, and shoots bullets on command.
 
         #Create Officer images   
         #Initialize officer standing right image
-        self.officerRightImage = pygame.image.load('Characters\\officerRight.gif')
+        self.color = random.choice(['red', 'green', 'blue', 'yellow'])
+        if self.color == 'red':
+            self.monster = 'Characters\\red.png'
+            self.monsterW = 'Characters\\redW.png'
+        if self.color == 'green':
+            self.monster = 'Characters\\green.png'
+            self.monsterW = 'Characters\\greenW.png'
+        if self.color == 'blue':
+            self.monster = 'Characters\\blue.png'
+            self.monsterW = 'Characters\\blueW.png'
+        if self.color == 'yellow':
+            self.monster = 'Characters\\yellow.png'
+            self.monsterW = 'Characters\\yellowW.png'
+        
+        self.officerRightImage = pygame.image.load(self.monster)
 
         #Initialize officer rect
         self.officerRect = self.officerRightImage.get_rect()
         self.officerRect.centerx = officerX
-        self.officerRect.centery = 528
-        self.officerRight = pygame.transform.scale(self.officerRightImage, (70, 100))
+        self.officerRect.centery = 463
+        self.officerRight = self.officerRightImage
 
         #Initialize officer walking right image
-        self.officerImage2 = pygame.image.load('Characters\\officerWalkRight.gif')
+        self.officerImage2 = pygame.image.load(self.monsterW)
 
         #Initialize officer walking rect
         self.officerRect2 = self.officerImage2.get_rect()
         self.officerRect2.centerx = officerX
-        self.officerRect2.centery = 528
-        self.officerWalkRight = pygame.transform.scale(self.officerImage2, (70, 100))
+        self.officerRect2.centery = 463
+        self.officerWalkRight = self.officerImage2
         
         #Initialize officer walking left image
         self.officerWalkLeftImage = pygame.transform.flip(self.officerWalkRight, True, False)
-        self.officerWalkLeft = pygame.transform.scale(self.officerWalkLeftImage, (70, 100))
+        self.officerWalkLeft = self.officerWalkLeftImage
 
         #Initialize officer standing left image
         self.officerLeftImage = pygame.transform.flip(self.officerRight, True, False)
-        self.officerLeft = pygame.transform.scale(self.officerLeftImage, (70, 100))
+        self.officerLeft = self.officerLeftImage
 
         self.officerStandingImages = [self.officerLeft, self.officerRight]
         self.officerWalkingImages = [self.officerWalkLeft, self.officerWalkRight]
-
-        if officerType != 'sheriff':
-            #Create Officer images   
-            #Initialize officer standing right image
-            self.officerRightImage = pygame.image.load('Characters\\deputy.gif')
-
-            #Initialize officer rect
-            self.officerRect = self.officerRightImage.get_rect()
-            self.officerRect.centerx = officerX
-            self.officerRect.centery = 540
-            self.officerRight = pygame.transform.scale(self.officerRightImage, (80, 135))
-
-            #Initialize officer walking right image
-            self.officerImage2 = pygame.image.load('Characters\\deputyWalk.gif')
-
-            #Initialize officer walking rect
-            self.officerRect2 = self.officerImage2.get_rect()
-            self.officerRect2.centerx = officerX
-            self.officerRect2.centery = 540
-            self.officerWalkRight = pygame.transform.scale(self.officerImage2, (80, 135))
-        
-            #Initialize officer walking left image
-            self.officerWalkLeftImage = pygame.transform.flip(self.officerWalkRight, True, False)
-            self.officerWalkLeft = pygame.transform.scale(self.officerWalkLeftImage, (80, 135))
-
-            #Initialize officer standing left image
-            self.officerLeftImage = pygame.transform.flip(self.officerRight, True, False)
-            self.officerLeft = pygame.transform.scale(self.officerLeftImage, (80, 135))
-
-            self.officerStandingImages = [self.officerLeft, self.officerRight]
-            self.officerWalkingImages = [self.officerWalkLeft, self.officerWalkRight]
 
 
         #Draw 9mm in hand
@@ -144,7 +127,7 @@ weapons, and shoots bullets on command.
             self.gunRect.centerx = self.rect.centerx + 110
             self.gunRect.centery = self.rect.centery + 30
         if self.character == 'officer':
-            self.gunRect[1] = 480
+            self.gunRect[1] = 470
 
         #Initialize AK-47 image and rect
         self.rightAKimage = pygame.image.load('Weapons\\AK-47.gif')

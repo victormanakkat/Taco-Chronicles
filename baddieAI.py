@@ -24,14 +24,14 @@ and another boolean the determins if it should play sound.'''
         self.takeStep = False
         self.direction = 0
         self.baddieX = officerX
-        self.baddieGunX = {'right':abs(self.baddieX) + 45, 'left':self.baddieX + 7}
+        self.baddieGunX = {'right':abs(self.baddieX) + 55, 'left':self.baddieX + -3}
         self.shoot = False
         self.time = 0
         self.characters = ['sheriff', 'deputy']
         self.centered = False
         self.reload = False
         self.back = False
-        super(AI, self).__init__('officer', windowSurface, abs(self.baddieX), self.baddieGunX, random.choice(self.characters))
+        super(AI, self).__init__('officer', windowSurface, abs(self.baddieX), self.baddieGunX)
 
     def get_rect(self):
         return super(AI, self).get_rect()

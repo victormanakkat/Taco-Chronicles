@@ -87,13 +87,13 @@ while True:
         if goBack:
             break
 
-    if totalscore > 5000:
-        lockedGuns['shotgun'] = False
     if totalscore > 10000:
+        lockedGuns['shotgun'] = False
+    if totalscore > 15000:
         lockedGuns['AK-47'] = False
-    if totalscore > 20000:
+    if totalscore > 30000:
         lockedGuns['bazooka'] = False
-    if totalscore > 25000:
+    if totalscore > 35000:
         lockedGuns['flamethrower'] = False
 
     

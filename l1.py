@@ -53,7 +53,7 @@ class L1(object):
         self.gunButtonCoords = [695, 30, 735, 30, 715, 50]
         self.toolButtonCoords = [395, 30, 435, 30, 415, 50]
         self.officerX = 1500
-        self.officerGunX = {'right':abs(self.officerX) + 45, 'left':self.officerX + 7}
+        self.officerGunX = {'right':abs(self.officerX) + 55, 'left':self.officerX + -3}
         self.gunXlist = []
         self.takeStep = 0
         self.direction = 1
@@ -106,7 +106,7 @@ class L1(object):
         #Add the cops gun
         self.index = 0
         for i in range(0, self.TOTAL_COPS):
-            self.gunXlist.append({'right':abs(self.Xlist[self.index]) + 45, 'left':self.Xlist[self.index] + 7})
+            self.gunXlist.append({'right':abs(self.Xlist[self.index]) + 80, 'left':self.Xlist[self.index] + -10})
             self.index += 1
 
         #Add Supplies to random locations
@@ -137,7 +137,7 @@ class L1(object):
             #Setup all the cops gun position.
             self.index = 0
             for cop in self.copList:
-                self.gunXlist[self.index] = {'right':self.copList[self.index].get_rect()[0] + 45, 'left':self.copList[self.index].get_rect()[0] + 7}
+                self.gunXlist[self.index] = {'right':self.copList[self.index].get_rect()[0] + 80, 'left':self.copList[self.index].get_rect()[0] + -10}
                 self.index += 1
                 
             for event in pygame.event.get():
