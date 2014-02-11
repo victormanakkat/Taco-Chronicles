@@ -3,7 +3,7 @@ Taco Chronicles
 
 Goal 
 You are Dr. Taco and want to take over the world! All you have is your awesome costume and a weapon. 
-Use the arrow keys to run through the level, jump, and shoot at oncoming cops. The farther you get, 
+Use the arrow keys to run through the level, jump, and shoot at oncoming monsters. The farther you get, 
 the bigger and better weapons you receive! And then eat Taco's to unlock even more goodies!
 
 About PYWARE 
