@@ -130,6 +130,7 @@ class L1(object):
     def play(self, highscore, totalscore):
         #If there is no quit event, (i.e reload or back)
         while self.runGame == True:
+            self.stopAll = False
             #Setup rect list and blit background
             self.reload = False
             self.ammoX, self.healthX, self.tacosX, self.endPoint = self.level_1.blitBackground(self.moveRight, self.moveLeft, self.ammoX,
@@ -143,8 +144,8 @@ class L1(object):
             for event in pygame.event.get():
                 self.sound, self.paused, self.reload, self.back = self.tools.addButtons(self.sound, event)
                 if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    self.runGame = False
+                    self.stopAll = True
                 if event.type == KEYDOWN:
                     if event.key == K_RIGHT:
                         self.direction = 1
@@ -302,4 +303,4 @@ class L1(object):
             else:
                 pygame.mixer.music.stop()
                 self.first = True
-        return self.reload, self.back, highscore, totalscore
+        return self.reload, self.back, highscore, totalscore, self.stopAll

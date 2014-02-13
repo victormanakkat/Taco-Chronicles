@@ -1,6 +1,6 @@
 # main.py
 # By Tyler Spadgenske
-VERSION = '0.1.0'
+VERSION = '1.0.5'
 
 #Really important values
 showFPS = True
@@ -58,6 +58,7 @@ start = Screen(windowSurface)
 clicked = False
 windowSurface.fill((255, 255, 255))
 pygame.mixer.music.load('sound//gameTheme.mp3')
+exit = False
 
 while True:
     restart = True
@@ -65,13 +66,13 @@ while True:
     pygame.mixer.music.play(-1, 0.0)
     windowSurface.fill((255, 255, 255))
     while True:
-        clicked, exit = start.startScreen(highscore, clicked)
-        if clicked:
-            break
         if exit:
             getFiles.write(highscore, totalscore, firstRun, lockedGuns)
             pygame.quit()
             sys.exit()
+        clicked, exit = start.startScreen(highscore, clicked)
+        if clicked:
+            break
         
     pygame.mixer.music.stop()
 
@@ -83,7 +84,7 @@ while True:
     #Run the gameplay
     count = 0
     for i in l1List:
-        restart, goBack, highscore, totalscore = i.play(highscore, totalscore)
+        restart, goBack, highscore, totalscore, exit = i.play(highscore, totalscore)
         if restart == False:
             break
         if goBack:
@@ -92,7 +93,8 @@ while True:
             count += 1
         if count == len(l1List):
             break
-
+        if exit:
+            break
     if totalscore > 10000:
         lockedGuns['shotgun'] = False
     if totalscore > 15000:
