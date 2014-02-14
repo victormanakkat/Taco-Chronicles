@@ -40,7 +40,7 @@ os.environ ['SDL_VIDEO_WINDOW_POS'] = 'center'
 WINDOWWIDTH = 1200
 WINDOWHIEGHT = 600
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
-pygame.display.set_caption('The Taco Chronicles v' + VERSION)
+pygame.display.set_caption('The Taco Chronicles')
 mainClock = pygame.time.Clock()
 
 #Setup Colors
