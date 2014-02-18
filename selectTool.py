@@ -31,7 +31,7 @@ I didn't want such a large program.
         self.gunMenuBox2 = {'rect':pygame.Rect(453, 5, 85, 65), 'color':self.ORANGE}
 
         #Initialize lock rect and image
-        self.LockImage = pygame.image.load('Weapons\\lock.gif')
+        self.LockImage = pygame.image.load('files\\Weapons\\lock.gif')
         self.lockImage1 = pygame.transform.scale(self.LockImage, (30, 40))
         
         self.lockRect1 = self.lockImage1.get_rect()
@@ -41,7 +41,7 @@ I didn't want such a large program.
 
         #Initialize tool images and text
         #Crowbar text and images
-        self.CrowbarImage = pygame.image.load('Tools\\crowbar.gif')
+        self.CrowbarImage = pygame.image.load('files\\Tools\\crowbar.gif')
         self.crowbarImage = pygame.transform.scale(self.CrowbarImage, (60, 55))
         self.crowbarRect = self.crowbarImage.get_rect()
 
@@ -52,7 +52,7 @@ I didn't want such a large program.
         self.crowbarTextRect[1] = 55
 
         #Initialize rope images and text
-        self.RopeImage = pygame.image.load('Tools\\rope.gif')
+        self.RopeImage = pygame.image.load('files\\Tools\\rope.gif')
         self.ropeImage = pygame.transform.scale(self.RopeImage, (65, 65))
         self.ropeRect = self.ropeImage.get_rect()
 
@@ -63,7 +63,7 @@ I didn't want such a large program.
         self.ropeTextRect[1] = 55
         
         #Initialize key images and text
-        self.keyImage2 = pygame.image.load('Tools\\key.gif')
+        self.keyImage2 = pygame.image.load('files\\Tools\\key.gif')
         self.keyImage = pygame.transform.scale(self.keyImage2, (50, 50))
         self.keyRect = self.keyImage.get_rect()
 
@@ -74,12 +74,12 @@ I didn't want such a large program.
         self.keyTextRect[1] = 50
 
         #Initialize TNT Images and text
-        self.TNTImage2 = pygame.image.load('Tools\\TNT.png')
+        self.TNTImage2 = pygame.image.load('files\\Tools\\TNT.png')
         self.TNTimage = pygame.transform.scale(self.TNTImage2, (40, 40))
         self.TNTrect = self.TNTimage.get_rect()
 
         #Initialize jetapack images and text
-        self.jetpackImage2 = pygame.image.load('Tools\\jetpack.png')
+        self.jetpackImage2 = pygame.image.load('files\\Tools\\jetpack.png')
         self.jetpackImage = pygame.transform.scale(self.jetpackImage2, (22, 64))
         self.jetpackRect = self.jetpackImage.get_rect()
         

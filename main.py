@@ -40,7 +40,9 @@ os.environ ['SDL_VIDEO_WINDOW_POS'] = 'center'
 WINDOWWIDTH = 1200
 WINDOWHIEGHT = 600
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHIEGHT), 0, 32)
+icon = pygame.image.load('files\\icon.png')
 pygame.display.set_caption('The Taco Chronicles')
+pygame.display.set_icon(icon)
 mainClock = pygame.time.Clock()
 
 #Setup Colors
@@ -57,7 +59,7 @@ restart = True
 start = Screen(windowSurface)
 clicked = False
 windowSurface.fill((255, 255, 255))
-pygame.mixer.music.load('sound//gameTheme.mp3')
+pygame.mixer.music.load('files//sound//gameTheme.mp3')
 exit = False
 
 while True:

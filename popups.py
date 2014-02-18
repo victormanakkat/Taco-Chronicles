@@ -30,7 +30,7 @@ class Popups(object, Button):
         self.textRect.centery = self.window.get_rect().centery - 150
 
         #Create taco image
-        self.tacoImageBIG = pygame.image.load('powerups\\taco.png')
+        self.tacoImageBIG = pygame.image.load('files\\powerups\\taco.png')
         self.tacoRect = self.tacoImageBIG.get_rect()
         self.tacoRect.centerx = self.window.get_rect().centerx 
         self.tacoRect.centery = self.window.get_rect().centery - 60
@@ -54,7 +54,7 @@ class Popups(object, Button):
     
     def endgame(self):
         while True:
-            self.tacoImage = pygame.image.load('Characters\\blownUp.gif')
+            self.tacoImage = pygame.image.load('files\\Characters\\blownUp.gif')
             block = {'rect':pygame.Rect(475, 115, 250, 300),'color':self.WHITE}
             pygame.draw.rect(self.window, block['color'], block['rect'])
             #Initialize reload image rect

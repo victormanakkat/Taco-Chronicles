@@ -39,7 +39,7 @@ Suite 330, Boston, MA  02111-1307  USA"""
         info.SetVersion('1.0')
         info.SetDescription(description)
         info.SetCopyright('(C) 2014 PYWARE')
-        info.SetWebSite('www.Github.com/pywareCode/Taco-Chronicles')
+        info.SetWebSite('pywarecode.github.io/Taco-Chronicles')
         info.SetLicence(licence)
         info.AddDeveloper('Tyler Spadgenske')
         info.AddArtist('Tyler Spadgenske')

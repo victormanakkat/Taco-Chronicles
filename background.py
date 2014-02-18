@@ -60,69 +60,69 @@ class Level_1(Background):
         #Setup important values
         self.windowSurface = surface
         #Setup Bannanabees Image
-        self.bananaBeesImage = pygame.image.load('Buildings\\BananaBees.gif')
+        self.bananaBeesImage = pygame.image.load('files\\Buildings\\BananaBees.gif')
         self.bananaBeesRect = self.bananaBeesImage.get_rect()
         self.bananaBeesRect[0] = 250
         self.bananaBeesRect[1] = 225
 
         #Initialize Fire Station Image
-        self.fireStationImage = pygame.image.load('Buildings\\FireStation.png')
+        self.fireStationImage = pygame.image.load('files\\Buildings\\FireStation.png')
         self.fireStationRect = self.fireStationImage.get_rect()
         self.fireStationRect[0] = 900
         self.fireStationRect[1] = 170
 
         #Initialize Apartment Images
         #Apt. 1
-        self.apt1Image = pygame.image.load('Buildings\\Apt1.png')
+        self.apt1Image = pygame.image.load('files\\Buildings\\Apt1.png')
         self.apt1Rect = self.apt1Image.get_rect()
         self.apt1Rect[0] = 2000
         self.apt1Rect[1] = -60
 
         #Apt. 2
-        self.apt2Image = pygame.image.load('Buildings\\Apt2.png')
+        self.apt2Image = pygame.image.load('files\\Buildings\\Apt2.png')
         self.apt2Rect = self.apt2Image.get_rect()
         self.apt2Rect[0] = 3000
         self.apt2Rect[1] = -60
 
         #Apt. 3
-        self.apt3Image = pygame.image.load('Buildings\\Apt3.png')
+        self.apt3Image = pygame.image.load('files\\Buildings\\Apt3.png')
         self.apt3Rect = self.apt3Image.get_rect()
         self.apt3Rect[0] = 4000
         self.apt3Rect[1] = -60
 
         #Apt. 4
-        self.apt4Image = pygame.image.load('Buildings\\Apt4.png')
+        self.apt4Image = pygame.image.load('files\\Buildings\\Apt4.png')
         self.apt4Rect = self.apt4Image.get_rect()
         self.apt4Rect[0] = 5000
         self.apt4Rect[1] = -60
 
         #Initialize TV LAND image
-        self.TVLandImage = pygame.image.load('Buildings\\TV_LAND.png')
+        self.TVLandImage = pygame.image.load('files\\Buildings\\TV_LAND.png')
         self.TVLandRect = self.TVLandImage.get_rect()
         self.TVLandRect[0] = 6000
         self.TVLandRect[1] = 163
 
         #Initialize tree image
-        self.treeImage = pygame.image.load('Buildings\\tree.gif')
+        self.treeImage = pygame.image.load('files\\Buildings\\tree.gif')
         self.tree = pygame.transform.scale(self.treeImage, (500, 550))
         self.treeRect = self.treeImage.get_rect()
         self.treeRect[0] = 6750
         self.treeRect[1] = 0
         
         #Initialize Police Station image
-        self.PoliceStationImage = pygame.image.load('Buildings\\PoliceStation.png')
+        self.PoliceStationImage = pygame.image.load('files\\Buildings\\PoliceStation.png')
         self.PoliceStationRect = self.PoliceStationImage.get_rect()
         self.PoliceStationRect[0] = 7200
         self.PoliceStationRect[1] = 165
 
         #Initialize Papa Con's Pizza image
-        self.consPizzaImage = pygame.image.load('Buildings\\consPizza.png')
+        self.consPizzaImage = pygame.image.load('files\\Buildings\\consPizza.png')
         self.consPizzaRect = self.consPizzaImage.get_rect()
         self.consPizzaRect[0] = 8200
         self.consPizzaRect[1] = 122
 
         #Initialize Taco Bell image
-        self.TacoBellImage = pygame.image.load('Buildings\\TacoBell.png')
+        self.TacoBellImage = pygame.image.load('files\\Buildings\\TacoBell.png')
         self.TacoBellRect = self.TacoBellImage.get_rect()
         self.TacoBellRect[0] = 9200
         self.TacoBellRect[1] = 95
@@ -162,17 +162,17 @@ class Level_2(Background):
         #Setup important values
         self.windowSurface = surface
         #Setup Outside skyscraper Image
-        self.skyscraperImage = pygame.image.load('Buildings\\skyscraper.png')
+        self.skyscraperImage = pygame.image.load('files\\Buildings\\skyscraper.png')
         self.skyscraperRect = self.skyscraperImage.get_rect()
         self.skyscraperRect[0] = 3150
         self.skyscraperRect[1] = 31
         #Setup Burger Barn Image
-        self.burgerBarnImage = pygame.image.load('Buildings\\burgerBarn.png')
+        self.burgerBarnImage = pygame.image.load('files\\Buildings\\burgerBarn.png')
         self.burgerBarnRect = self.burgerBarnImage.get_rect()
         self.burgerBarnRect[0] = 2300
         self.burgerBarnRect[1] = 130
         #Setup Central Park Image
-        self.centralParkImage = pygame.image.load('Buildings\\centralPark.png')
+        self.centralParkImage = pygame.image.load('files\\Buildings\\centralPark.png')
         self.centralParkRect = self.centralParkImage.get_rect()
         self.centralParkRect[0] = 250
         self.centralParkRect[1] = 100

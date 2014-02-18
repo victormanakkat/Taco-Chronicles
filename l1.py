@@ -28,7 +28,7 @@ class L1(object):
         self.showFPS = showFPS
 
         #Setup theme music
-        pygame.mixer.music.load('sound//gameTheme.mp3')
+        pygame.mixer.music.load('files//sound//gameTheme.mp3')
 
         #Constants
         self.BPS = 8 #(Bullets Per Second)

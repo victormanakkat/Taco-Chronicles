@@ -41,7 +41,7 @@ weapons, and shoots bullets on command.
 
         #Create Doctor Taco Images
         #Initialize Dr. Taco standing right image
-        self.DrTacoRightImage = pygame.image.load('Characters\\DrTacoRight.gif')
+        self.DrTacoRightImage = pygame.image.load('files\\Characters\\DrTacoRight.gif')
 
         #Initialize Dr. Taco rect
         self.rect = self.DrTacoRightImage.get_rect()
@@ -50,7 +50,7 @@ weapons, and shoots bullets on command.
         self.DrTacoRight = pygame.transform.scale(self.DrTacoRightImage, (80, 110))
 
         #Initialize Dr. Taco walking right image
-        self.tacoImage2 = pygame.image.load('Characters\\DrTacoWalkRight.gif')
+        self.tacoImage2 = pygame.image.load('files\\Characters\\DrTacoWalkRight.gif')
 
         #Initialize Dr. Taco walking rect
         self.rect2 = self.tacoImage2.get_rect()
@@ -73,17 +73,17 @@ weapons, and shoots bullets on command.
         #Initialize officer standing right image
         self.color = random.choice(['red', 'green', 'blue', 'yellow'])
         if self.color == 'red':
-            self.monster = 'Characters\\red.png'
-            self.monsterW = 'Characters\\redW.png'
+            self.monster = 'files\\Characters\\red.png'
+            self.monsterW = 'files\\Characters\\redW.png'
         if self.color == 'green':
-            self.monster = 'Characters\\green.png'
-            self.monsterW = 'Characters\\greenW.png'
+            self.monster = 'files\\Characters\\green.png'
+            self.monsterW = 'files\\Characters\\greenW.png'
         if self.color == 'blue':
-            self.monster = 'Characters\\blue.png'
-            self.monsterW = 'Characters\\blueW.png'
+            self.monster = 'files\\Characters\\blue.png'
+            self.monsterW = 'files\\Characters\\blueW.png'
         if self.color == 'yellow':
-            self.monster = 'Characters\\yellow.png'
-            self.monsterW = 'Characters\\yellowW.png'
+            self.monster = 'files\\Characters\\yellow.png'
+            self.monsterW = 'files\\Characters\\yellowW.png'
         
         self.officerRightImage = pygame.image.load(self.monster)
 
@@ -116,7 +116,7 @@ weapons, and shoots bullets on command.
 
         #Draw 9mm in hand
         #Initialize 9mm Images
-        self.right9mmImage = pygame.image.load('Weapons\\9mmRight.gif')
+        self.right9mmImage = pygame.image.load('files\\Weapons\\9mmRight.gif')
         self.right9mm = pygame.transform.scale(self.right9mmImage, (20, 15))
 
         self.left9mm = pygame.transform.flip(self.right9mm, True, False)
@@ -130,7 +130,7 @@ weapons, and shoots bullets on command.
             self.gunRect[1] = 470
 
         #Initialize AK-47 image and rect
-        self.rightAKimage = pygame.image.load('Weapons\\AK-47.gif')
+        self.rightAKimage = pygame.image.load('files\\Weapons\\AK-47.gif')
         self.AKright = pygame.transform.scale(self.rightAKimage, (65, 55))
 
         self.AKleft = pygame.transform.flip(self.AKright, True, False)
@@ -140,7 +140,7 @@ weapons, and shoots bullets on command.
         self.AKgunRect.centery = self.rect.centery + 5
         
         #Initialize shotgun image and rect
-        self.rightShotgunimage = pygame.image.load('Weapons\\shotgun.gif')
+        self.rightShotgunimage = pygame.image.load('files\\Weapons\\shotgun.gif')
         self.shotgunRight = pygame.transform.scale(self.rightShotgunimage, (90, 90))
 
         self.shotgunLeft = pygame.transform.flip(self.shotgunRight, True, False)
@@ -150,7 +150,7 @@ weapons, and shoots bullets on command.
         self.shotgunRect.centery = self.rect.centery + 15
 
         #Initialize bazooka image and rect
-        self.rightBazookaImage = pygame.image.load('Weapons\\bazooka.gif')
+        self.rightBazookaImage = pygame.image.load('files\\Weapons\\bazooka.gif')
         self.bazookaRight = pygame.transform.scale(self.rightBazookaImage, (90, 40))
 
         self.bazookaLeft = pygame.transform.flip(self.bazookaRight, True, False)
@@ -159,11 +159,11 @@ weapons, and shoots bullets on command.
         self.bazookaRect.centery = self.rect.centery - 25
 
         #Create rocket image
-        self.rocketRight = pygame.image.load('Weapons\\rocket.png')
+        self.rocketRight = pygame.image.load('files\\Weapons\\rocket.png')
         self.rocketLeft = pygame.transform.flip(self.rocketRight, True, False)
 
         #Initialize flamethrower image and rect
-        self.rightFlamethrowerImage = pygame.image.load('Weapons\\flamethrower.gif')
+        self.rightFlamethrowerImage = pygame.image.load('files\\Weapons\\flamethrower.gif')
         self.flamethrowerRight = pygame.transform.scale(self.rightFlamethrowerImage, (70, 30))
 
         self.flamethrowerLeft = pygame.transform.flip(self.flamethrowerRight, True, False)
@@ -172,7 +172,7 @@ weapons, and shoots bullets on command.
         self.flamethrowerRect.centery = self.rect.centery - 50
 
         #Create flame image
-        self.flameRight = pygame.image.load('Weapons\\flame.png')
+        self.flameRight = pygame.image.load('files\\Weapons\\flame.png')
         self.flameLeft = pygame.transform.flip(self.flameRight, True, False)
         self.flameRect = self.flameRight.get_rect()
         
@@ -192,10 +192,10 @@ weapons, and shoots bullets on command.
         self.flameDirection = 1
 
         #Setup sound
-        self.gunshot = pygame.mixer.Sound('sound\\gunshot.wav')
-        self.gunclick = pygame.mixer.Sound('sound\\gunclick.wav')
-        self.whoosh = pygame.mixer.Sound('sound\\rocket.wav')
-        self.flame = pygame.mixer.Sound('sound\\flame.wav')
+        self.gunshot = pygame.mixer.Sound('files\\sound\\gunshot.wav')
+        self.gunclick = pygame.mixer.Sound('files\\sound\\gunclick.wav')
+        self.whoosh = pygame.mixer.Sound('files\\sound\\rocket.wav')
+        self.flame = pygame.mixer.Sound('files\\sound\\flame.wav')
         
     #This function returns the characters rect
     def get_rect(self):

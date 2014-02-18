@@ -1,18 +1,29 @@
-Taco Chronicles
-===============
+Taco Chronicles v1.0.9
+======================
 
 Goal 
 You are Dr. Taco and want to take over the world! All you have is your awesome costume and a weapon. 
 Use the arrow keys to run through the level, jump, and shoot at oncoming monsters. The farther you get, 
 the bigger and better weapons you receive! And then eat Taco's to unlock even more goodies!
 
-About PYWARE 
-PYWARE is a Python Software making group run by Tyler Spadgenske. The Taco Chronicles is the groups'
-first big program, but many more are to come. 
+Download
+Most likely you have already downloaded the Taco Chronicles since you are reading this file. But if you
+haven't, go to pywarecode.github.io/Taco-Chronicles and click on the "Download" button.
 
-Development 
-The Taco Chronicles development is run by PYWARE, and is currently moving along smoothly. The game will
-be programed in Python, an advanced text-based language powerful enough to do anything.
+Install
+Once you have downloaded the Taco Chronicles, move the .zip package to a safe location out of the downloads
+folder. Then, extract the .zip and delete the .zip (But keep the extracted part). Enter the extracted folder
+and right click over the exe called "The Taco Chronicles". Go to the "Send To" menu and click on desktop.
+Go to the desktop and double click on the shortcut. Accept the license, or read the complete LICENSE.txt file,
+and the game will start.
 
-How to use source 
-To use the Taco Chronicles source, you must be using Python 2.X. Run the main.py file and you will see level 1. If you would like to run level 2, run the l2.py file. Same with levels 3 and 4. Call help(module) on any class to see how to use it. 
+Play
+To play the Taco Chronicles, you use the arrow keys to walk and jump. Press the space to shoot, and use the
+mouse to click on the different buttons. As you play and shoot more monsters, you will unlock new weapons.
+
+Weapons Chart
+9mm:              0 points needed to unlock
+Shotgun:      10000 points needed to unlock
+AK-47:        15000 points needed to unlock
+Bazooka:      30000 points needed to unlock
+Flamethrower: 35000 points needed to unlock

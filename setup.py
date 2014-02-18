@@ -48,10 +48,10 @@ class BuildExe:
         self.project_name = "The Taco Chronicles"
  
         #Project url
-        self.project_url = "https://www.github.com/pywareCode/Taco-Chronicles"
+        self.project_url = "pywarecode.github.io/Taco-Chronicles"
  
         #Version of program
-        self.project_version = "1.0"
+        self.project_version = "1.0.9"
  
         #License of the program
         self.license = "GPL License"
@@ -65,7 +65,7 @@ class BuildExe:
         self.project_description = "Taco Chronicles Description"
  
         #Icon file (None will use pygame default icon)
-        self.icon_file = None
+        self.icon_file = 'files\\icon.ico'
  
         #Extra files/dirs copied to game
         self.extra_datas = []
