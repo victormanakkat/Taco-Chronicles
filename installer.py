@@ -36,10 +36,10 @@ Suite 330, Boston, MA  02111-1307  USA"""
 
         info = wx.AboutDialogInfo()
         info.SetName('Taco Chronicles')
-        info.SetVersion('1.0')
+        info.SetVersion('1.0.9')
         info.SetDescription(description)
-        info.SetCopyright('(C) 2014 PYWARE')
-        info.SetWebSite('pywarecode.github.io/Taco-Chronicles')
+        info.SetCopyright('(C) 2014 Tyler Spadgenske')
+        info.SetWebSite('spadgenske.github.io/Taco-Chronicles')
         info.SetLicence(licence)
         info.AddDeveloper('Tyler Spadgenske')
         info.AddArtist('Tyler Spadgenske')
