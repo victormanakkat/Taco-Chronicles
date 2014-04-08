@@ -57,7 +57,7 @@ This class is only used inside the Toolbar() class
         self.gunMenuBox2 = {'rect':pygame.Rect(603, 5, 85, 65), 'color':self.ORANGE}
 
         #Initialize lock rect and image
-        self.LockImage = pygame.image.load('files\\Weapons\\lock.gif')
+        self.LockImage = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/lock.gif')
         self.lockImage1 = pygame.transform.scale(self.LockImage, (30, 40))
         
         self.lockRect1 = self.lockImage1.get_rect()
@@ -67,7 +67,7 @@ This class is only used inside the Toolbar() class
 
         #Initialize Gun images and text
         #9mm text and images
-        self.PistolImage = pygame.image.load('files\\Weapons\\9mmRight.gif')
+        self.PistolImage = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/9mmRight.gif')
         self.pistolImage = pygame.transform.scale(self.PistolImage, (60, 55))
         self.rect9mm = self.pistolImage.get_rect()
         self.rect9mm[0] = 615
@@ -80,7 +80,7 @@ This class is only used inside the Toolbar() class
         self.text9mmRect[1] = 50
 
         #Initialize Shotgun images and text
-        self.ShotgunImage = pygame.image.load('files\\Weapons\\shotgun.gif')
+        self.ShotgunImage = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/shotgun.gif')
         self.shotgunImage = pygame.transform.scale(self.ShotgunImage, (90, 90))
         self.shotgunRect = self.shotgunImage.get_rect()
         self.shotgunRect[0] = 615
@@ -93,7 +93,7 @@ This class is only used inside the Toolbar() class
         self.shotgunTextRect[1] = 50
 
         #Initialize AK-47 images and text
-        self.AK47Image2 = pygame.image.load('files\\Weapons\\AK-47.gif')
+        self.AK47Image2 = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/AK-47.gif')
         self.AK47Image = pygame.transform.scale(self.AK47Image2, (90, 90))
         self.AK47Rect = self.AK47Image.get_rect()
         self.AK47Rect[0] = 615
@@ -106,7 +106,7 @@ This class is only used inside the Toolbar() class
         self.AK47TextRect[1] = 50
 
         #Initialize Bazooka Images and text
-        self.bazookaImage2 = pygame.image.load('files\\Weapons\\bazooka.gif')
+        self.bazookaImage2 = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/bazooka.gif')
         self.bazookaImage = pygame.transform.scale(self.bazookaImage2, (90, 40))
         self.bazookaRect = self.bazookaImage.get_rect()
         self.bazookaRect[0] = 615
@@ -119,7 +119,7 @@ This class is only used inside the Toolbar() class
         self.bazookaTextRect[1] = 50
     
         #Initialize Flamethrower images and text
-        self.flamethrowerImage2 = pygame.image.load('files\\Weapons\\flamethrower.gif')
+        self.flamethrowerImage2 = pygame.image.load('/home/pi/Taco-Chronicles/files/Weapons/flamethrower.gif')
         self.flamethrowerImage = pygame.transform.scale(self.flamethrowerImage2, (90, 40))
         self.flamethrowerRect = self.flamethrowerImage.get_rect()
         self.flamethrowerRect[0] = 615

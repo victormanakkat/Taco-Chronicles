@@ -21,8 +21,7 @@ class Button:
         self.exit = False
 
         #Setup stuff for startButton()
-        #self.comicFont = pygame.font.Font('files\\font\\font.ttf', 60)
-        self.comicFont = pygame.font.SysFont(None, 60)
+        self.comicFont = pygame.font.Font('/home/pi/Taco-Chronicles/files/font/font.ttf', 60)
         self.buttonColor = [self.WHITE, self.ORANGE]
     def arrow(self, clickedOn, event, coords): #coords example: [695, 30, 735, 30, 715, 50]
         #Detect whether the mouse is on the triangle, if
@@ -60,14 +59,14 @@ class Button:
     def roundButton(self, event, button, location, flip = False):
 
         #Setup reload image and rect
-        self.reloadImage = pygame.image.load('files\\buttons\\reload.png')
+        self.reloadImage = pygame.image.load('/home/pi/Taco-Chronicles/files/buttons/reload.png')
         self.rect = self.reloadImage.get_rect()
         self.rect.centerx = location[0]
         self.rect.centery = location[1]
         self.reloadImageBIG = pygame.transform.scale(self.reloadImage, (75, 75))
 
         #Setup back image and Rect
-        self.backImage = pygame.image.load('files\\buttons\\back.png')
+        self.backImage = pygame.image.load('/home/pi/Taco-Chronicles/files/buttons/back.png')
         self.backRect = self.backImage.get_rect()
         self.backRect.centerx = location[0]
         self.backRect.centery = location[1]
@@ -77,18 +76,18 @@ class Button:
         self.backImageFlip = pygame.transform.flip(self.backImage, True, False)
 
         #Setup sound on image and Rect
-        self.soundOnImage = pygame.image.load('files\\buttons\\soundOn.png')
+        self.soundOnImage = pygame.image.load('/home/pi/Taco-Chronicles/files/buttons/soundOn.png')
         self.soundRect = self.soundOnImage.get_rect()
         self.soundRect.centerx = location[0]
         self.soundRect.centery = location[1]
         self.soundOnImageBIG = pygame.transform.scale(self.soundOnImage, (75, 75))
 
         #Setup sound off image
-        self.soundOffImage = pygame.image.load('files\\buttons\\soundOff.png')
+        self.soundOffImage = pygame.image.load('/home/pi/Taco-Chronicles/files/buttons/soundOff.png')
         self.soundOffImageBIG = pygame.transform.scale(self.soundOffImage, (75, 75))
 
         #Setup pause image and rectangle
-        self.pauseImage = pygame.image.load('files\\buttons\\pause.png')
+        self.pauseImage = pygame.image.load('/home/pi/Taco-Chronicles/files/buttons/pause.png')
         self.pauseRect = self.pauseImage.get_rect()
         self.pauseRect.centerx = location[0]
         self.pauseRect.centery = location[1]
