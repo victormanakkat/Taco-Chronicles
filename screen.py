@@ -16,8 +16,7 @@ class Screen():
         self.ORANGE = (255, 103, 1)
         self.WHITE = (255, 255, 255)
         #Setup title text
-        #self.comicFont = pygame.font.Font('files\\font\\font.ttf', 64)
-        self.comicFont = pygame.font.SysFont(None, 64)
+        self.comicFont = pygame.font.Font('files\\font\\font.ttf', 64)
         self.title = self.comicFont.render('THE TACO CHRONICLES', True, self.ORANGE, self.WHITE)
         self.titleRect = self.title.get_rect()
         self.titleRect.centerx = self.screen.get_rect().centerx
@@ -25,8 +24,7 @@ class Screen():
         self.exit = False
 
         #Setup Highscore text
-        #self.highscoreFont = pygame.font.Font('files\\font\\font.ttf', 30)
-        self.highscoreFont = pygame.font.SysFont(None, 30)
+        self.highscoreFont = pygame.font.Font('files\\font\\font.ttf', 30)
         self.scoreText = self.highscoreFont.render('HIGHSCORE ', True, self.ORANGE, self.WHITE)
         self.scoreRect = self.scoreText.get_rect()
         self.scoreRect.centerx = self.screen.get_rect().centerx

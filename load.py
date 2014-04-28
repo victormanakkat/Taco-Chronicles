@@ -9,8 +9,7 @@ def Load(screen):
     WHITE = (255, 255, 255)
     ORANGE = (255, 103, 1)
     screen.fill(WHITE)
-    #comicFont = pygame.font.Font('files\\font\\font.ttf', 40)
-    comicFont = pygame.font.SysFont(None, 40)
+    comicFont = pygame.font.Font('files\\font\\font.ttf', 40)
     text = comicFont.render('PLEASE WAIT...', True, ORANGE, WHITE)
     textRect = text.get_rect()
     textRect.centerx = screen.get_rect().centerx
