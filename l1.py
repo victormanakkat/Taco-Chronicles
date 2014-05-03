@@ -156,7 +156,8 @@ class L1(object):
                         self.moveLeft = True
                         self.moveRight = False
                     if event.key == K_UP:
-                        self.goUp = True
+                        if self.goUp == None:
+                            self.goUp = True
                     if event.key == K_SPACE:
                         self.shootBullet = True
                         self.rapidFire[1] = True
