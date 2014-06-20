@@ -48,10 +48,10 @@ class BuildExe:
         self.project_name = "The Taco Chronicles"
  
         #Project url
-        self.project_url = "pywarecode.github.io/Taco-Chronicles"
+        self.project_url = "spadgenske.github.io/Taco-Chronicles"
  
         #Version of program
-        self.project_version = "1.0.9"
+        self.project_version = "1.0.18"
  
         #License of the program
         self.license = "GPL License"
@@ -59,7 +59,7 @@ class BuildExe:
         #Auhor of program
         self.author_name = "Tyler Spadgenske"
         self.author_email = "tyspadgens@gmail.com"
-        self.copyright = "Copyright (c) 2014 PYWARE"
+        self.copyright = "Copyright (c) 2014 Tyler Spadgenske"
  
         #Description
         self.project_description = "Taco Chronicles Description"

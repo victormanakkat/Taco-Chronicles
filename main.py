@@ -1,11 +1,11 @@
 # main.py
 # By Tyler Spadgenske
-VERSION = '1.0.9'
+VERSION = '1.0.18'
 
 def main():
     #Really important values
     showFPS = True
-    TOTAL_OBJECTS = 9
+    TOTAL_OBJECTS = 1
 
     #Import modules
     import pygame, sys, os
@@ -79,25 +79,18 @@ def main():
         
         pygame.mixer.music.stop()
 
-        l1List = []
         Load(windowSurface)
-        for i in range(0, TOTAL_OBJECTS):
-            l1List.append(L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS))
     
         #Run the gameplay
         count = 0
-        for i in l1List:
-            restart, goBack, highscore, totalscore, exit = i.play(highscore, totalscore)
-            if restart == False:
-                break
+        while True:
+            level = L1(windowSurface, mainClock, SKY_BLUE, gameData, showFPS)
+            restart, goBack, highscore, totalscore, exit = level.play(highscore, totalscore)
             if goBack:
-                break
-            if restart:
-                count += 1
-            if count == len(l1List):
                 break
             if exit:
                 break
+            
         if totalscore > 10000:
             lockedGuns['shotgun'] = False
         if totalscore > 15000:
