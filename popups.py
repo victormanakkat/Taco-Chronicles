@@ -16,7 +16,7 @@ class Popups(object, Button):
         self.WHITE = (255, 255, 255)
         self.ORANGE = (255, 103, 1)
         
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.Font('files\\font\\arial.ttf', 24)
         #Create "Level Complete!" Text.
         self.winText = self.font.render('Level Complete!', True, self.ORANGE, self.WHITE)
         self.winTextRect = self.winText.get_rect()

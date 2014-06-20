@@ -14,11 +14,9 @@ haven't, go to pywarecode.github.io/Taco-Chronicles and click on the "Download" 
 
 Install
 ======================
-Once you have downloaded the Taco Chronicles, move the .zip package to a safe location out of the downloads
-folder. Then, extract the .zip and delete the .zip (But keep the extracted part). Enter the extracted folder
-and right click over the exe called "The Taco Chronicles". Go to the "Send To" menu and click on desktop.
-Go to the desktop and double click on the shortcut. Accept the license, or read the complete LICENSE.txt file,
-and the game will start.
+Once you have downloaded the Taco Chronicles, just double click on the installer file. The game will install,
+and you are ready to go. To start the application, you may have to run the program as admin. Just right click
+on the short cut and click on "Run As Administrator"
 
 Play
 ======================

@@ -73,7 +73,7 @@ This class is only used inside the Toolbar() class
         self.rect9mm[0] = 615
         self.rect9mm[1] = 10
 
-        self.font9mm = pygame.font.SysFont(None, 24)
+        self.font9mm = pygame.font.Font('files\\font\\arial.ttf', 17)
         self.text9mm = self.font9mm.render('9mm', True, WHITE, self.ORANGE)
         self.text9mmRect = self.text9mm.get_rect()
         self.text9mmRect[0] = 640
@@ -86,7 +86,7 @@ This class is only used inside the Toolbar() class
         self.shotgunRect[0] = 615
         self.shotgunRect[1] = 10
 
-        self.shotgunFont = pygame.font.SysFont(None, 24)
+        self.shotgunFont = pygame.font.Font('files\\font\\arial.ttf', 17)
         self.shotgunText = self.font9mm.render('shotgun', True, WHITE, self.ORANGE)
         self.shotgunTextRect = self.shotgunText.get_rect()
         self.shotgunTextRect[0] = 615
@@ -99,7 +99,7 @@ This class is only used inside the Toolbar() class
         self.AK47Rect[0] = 615
         self.AK47Rect[1] = 10
 
-        self.AK47Font = pygame.font.SysFont(None, 24)
+        self.AK47Font = pygame.font.Font('files\\font\\arial.ttf', 17)
         self.AK47Text = self.AK47Font.render('AK-47', True, WHITE, self.ORANGE)
         self.AK47TextRect = self.AK47Text.get_rect()
         self.AK47TextRect[0] = 615
@@ -112,7 +112,7 @@ This class is only used inside the Toolbar() class
         self.bazookaRect[0] = 615
         self.bazookaRect[1] = 10
 
-        self.bazookaFont = pygame.font.SysFont(None, 24)
+        self.bazookaFont = pygame.font.Font('files\\font\\arial.ttf', 17)
         self.bazookaText = self.bazookaFont.render('Bazooka', True, WHITE, self.ORANGE)
         self.bazookaTextRect = self.bazookaText.get_rect()
         self.bazookaTextRect[0] = 615
@@ -125,7 +125,7 @@ This class is only used inside the Toolbar() class
         self.flamethrowerRect[0] = 615
         self.flamethrowerRect[1] = 10
 
-        self.flamethrowerFont = pygame.font.SysFont(None, 17)
+        self.flamethrowerFont = pygame.font.Font('files\\font\\arial.ttf', 13)
         self.flamethrowerText = self.flamethrowerFont.render('Flamethrower', True, WHITE, self.ORANGE)
         self.flamethrowerTextRect = self.flamethrowerText.get_rect()
         self.flamethrowerTextRect[0] = 605

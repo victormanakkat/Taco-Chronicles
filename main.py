@@ -1,6 +1,6 @@
 # main.py
 # By Tyler Spadgenske
-VERSION = '1.0.18'
+VERSION = '1.0.19'
 
 def main():
     #Really important values

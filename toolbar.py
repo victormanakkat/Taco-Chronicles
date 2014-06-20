@@ -21,7 +21,7 @@ class Toolbar(Button):
         
         self.gunClicked = 0
         self.lockedGuns = lockedGuns
-        self.scoreSize = 80
+        self.scoreSize = 55
         self.weaponType = 'Ammo: '
         
         self.healthBarColor = self.GREEN
@@ -43,8 +43,8 @@ class Toolbar(Button):
         score = str(score)
         self.scoreLength = len(score)
         if self.scoreLength == 6:
-            self.scoreSize = 70
-        self.scoreFont = pygame.font.SysFont(None, self.scoreSize)
+            self.scoreSize = 45
+        self.scoreFont = pygame.font.Font('files\\font\\arial.ttf', self.scoreSize)
         self.scoreText = self.scoreFont.render(score, True, self.WHITE, self.ORANGE)
         self.scoreRect = self.scoreText.get_rect()
         self.scoreRect[0] = 100
@@ -104,7 +104,7 @@ class Toolbar(Button):
         self.healthBar = {'rect':pygame.Rect(900, 10, self.healthBarLength, 20),'color':self.healthBarColor}
         pygame.draw.rect(self.windowSurface, self.healthBar['color'], self.healthBar['rect'])
 
-        self.healthFont = pygame.font.SysFont(None, 24)
+        self.healthFont = pygame.font.Font('files\\font\\arial.ttf', 21)
         self.healthText = self.healthFont.render('Health', True, self.WHITE, self.ORANGE)
         self.healthRect = self.healthText.get_rect()
         self.healthRect[0] = 900
@@ -118,7 +118,7 @@ class Toolbar(Button):
         else:
             self.weaponType = 'Ammo: '
             
-        self.ammoFont = pygame.font.SysFont(None, 20)
+        self.ammoFont = pygame.font.Font('files\\font\\arial.ttf', 14)
         self.ammoText = self.ammoFont.render(self.weaponType + ammo, True, self.WHITE, self.ORANGE)
         self.ammoRect = self.ammoText.get_rect()
         self.ammoRect[0] = 100
@@ -126,7 +126,7 @@ class Toolbar(Button):
         self.windowSurface.blit(self.ammoText, self.ammoRect)
     
     def messageBox(self, message):
-        self.messageFont = pygame.font.SysFont(None, 48)
+        self.messageFont = pygame.font.Font('files\\font\\arial.ttf', 38)
         self.messageText = self.messageFont.render(message, True, self.WHITE, self.ORANGE)
         self.messageRect = self.messageText.get_rect()
         self.messageRect.centerx = self.windowSurface.get_rect().centerx
