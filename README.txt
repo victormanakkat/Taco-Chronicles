@@ -1,4 +1,4 @@
-Taco Chronicles v1.0.9
+Taco Chronicles v1.0.19
 ======================
 
 Goal 
@@ -10,7 +10,7 @@ the bigger and better weapons you receive! And then eat Taco's to unlock even mo
 Download
 ======================
 Most likely you have already downloaded the Taco Chronicles since you are reading this file. But if you
-haven't, go to pywarecode.github.io/Taco-Chronicles and click on the "Download" button.
+haven't, go to spadgenske.github.io/Taco-Chronicles and click on the "Download" button.
 
 Install
 ======================
