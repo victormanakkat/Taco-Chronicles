@@ -22,7 +22,7 @@ def main():
     from powerups import Powerups
     from baddieAI import AI
     from l1 import L1
-    from load import Load
+    import load
     from screen import Screen
     from file import File
 
@@ -45,7 +45,7 @@ def main():
     pygame.display.set_caption('The Taco Chronicles')
     pygame.display.set_icon(icon)
     mainClock = pygame.time.Clock()
-
+    load.Credits(windowSurface)
     #Setup Colors
     BLUE = (0,0,255)
     SKY_BLUE = (0, 255, 255)
@@ -63,7 +63,7 @@ def main():
     pygame.mixer.music.load('files//sound//gameTheme.mp3')
     exit = False
 
-    while True:
+    while True:        
         restart = True
         clicked = False
         pygame.mixer.music.play(-1, 0.0)
@@ -79,7 +79,7 @@ def main():
         
         pygame.mixer.music.stop()
 
-        Load(windowSurface)
+        load.Load(windowSurface)
     
         #Run the gameplay
         count = 0
