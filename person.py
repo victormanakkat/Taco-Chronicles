@@ -1,5 +1,6 @@
 #Creating the Person class
 #By Tyler Spadgenske
+#TODO: Add more functions and make file more orderly.
 import pygame, sys, random
 from pygame.locals import *
 pygame.init()
@@ -219,7 +220,7 @@ weapons, and shoots bullets on command.
         else: centered = True
         return rect, walkingRect, location, centered
 
-    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit, weapon = '', lifeLeft = None):
+    def shot(self, bulletList, bulletDirList, score, target_rect, message, hit, weapon = '', lifeLeft = None, flame = False):
         #If person is still alive continue on
         if self.drop == False:
             #If class is run by Doctor Taco continue on
@@ -243,8 +244,9 @@ weapons, and shoots bullets on command.
                             if every_bullet.colliderect(target_rect):
                                 bulletList.pop()
                                 bulletDirList.pop()
-                                hit = True
-                                lifeLeft += 1
+                                if flame == False:
+                                    hit = True
+                                    lifeLeft += 1
                                 
                     if self.character == 'Doctor Taco':
                         #If person is Dr. Taco and the officer has been hit the maximum times, add score and stop blitting the person
@@ -264,9 +266,6 @@ weapons, and shoots bullets on command.
                             self.drop = True
                         
         return score, message, hit, self.reload, self.back, lifeLeft
-
-    def burned():
-        pass
                 
     def walk(self, takeStep, direction, walkLeft, walkRight, weapon, officerX = None): #This function is used to make Dr. Taco move his legs from walking position to standing.
         if officerX != None:
@@ -326,7 +325,7 @@ weapons, and shoots bullets on command.
             goUp = None
         return goUp
         
-    def shootPistol(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None): 
+    def shootPistol(self, shootBullet, hit, direction, officerGunX, sound, target_rect = None, ammoLeft = 0, message = '', score = 0, lifeLeft = None, flame = False): 
         #Get message box value and setup the cops location
         self.location['9mm'][1]['right'] = officerGunX['right']
         self.location['9mm'][1]['left'] = officerGunX['left']
@@ -384,7 +383,7 @@ weapons, and shoots bullets on command.
                                                                                 target_rect, self.message, hit, lifeLeft = lifeLeft)
         if self.character == 'officer':
             score, self.message, hit, self.die, self.back, lifeLeft = self.shot(self.bullets, self.bulletDirection, score,
-                                                                                target_rect, self.message, hit, lifeLeft = lifeLeft)
+                                                                                target_rect, self.message, hit, lifeLeft = lifeLeft, flame = flame)
 
         # for every bullet in the bullet list blit it and move it in the correct direction
         for i in self.bullets:
@@ -656,6 +655,8 @@ weapons, and shoots bullets on command.
                     self.flame.play()
             # If your out of ammo, play a click and change the message
             if ammoLeft <= 0:
+                self.showFlame = False
+                self.shootBullet = False
                 if sound:
                     self.gunclick.stop()
                     self.gunclick.play()
@@ -689,5 +690,5 @@ weapons, and shoots bullets on command.
         self.bulletNum = 0
         self.num = 0
 
-        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die, lifeLeft
+        return shootBullet, hit, ammoLeft, self.message, score, self.officerRect[1], self.drop , self.die, lifeLeft, self.showFlame
         

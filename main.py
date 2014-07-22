@@ -90,7 +90,7 @@ def main():
                 break
             if exit:
                 break
-            
+
         if totalscore > 10000:
             lockedGuns['shotgun'] = False
         if totalscore > 15000:

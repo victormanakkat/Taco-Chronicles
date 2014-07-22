@@ -75,6 +75,7 @@ class L1(object):
         self.back = False
         self.tacosCollected = 0
         self.first = True
+        self.flame = False
 
         #Initialize Objects
         self.level_1 = Level_1(self.windowSurface)
@@ -229,16 +230,15 @@ class L1(object):
                         self.currentWeapon, lifeLeft = self.lifeLeft)
                 #If weapon is the flamethrower, put it in Dr. Taco's hand and enable it for use.
                 if self.currentWeapon == 'flamethrower':
-                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft = self.DrTaco.shootFlame(
+                    self.shootBullet, self.hit, self.ammo, self.message, self.score, self.officerX, self.drop, self.val, self.lifeLeft, self.flame = self.DrTaco.shootFlame(
                         self.shootBullet, self.hit, self.direction, self.officerGunX, self.sound, self.copList, self.ammo, self.message, self.score,
-                        self.currentWeapon, self.lifeLeft)
-                
+                        self.currentWeapon, self.lifeLeft)                
 
                 #Make all the cops think
                 self.index = 0
                 for cop in self.copList:                
                     self.hit, self.endReload, self.endBack, self.lifeLeft = cop.think(self.DrTaco.get_rect(), self.copList[self.index].get_rect()[0], self.gunXlist[self.index],
-                                                         self.drop, self.hit, self.sound, self.lifeLeft)
+                                                         self.drop, self.hit, self.sound, self.lifeLeft, self.flame)
                     #If Dr. Taco is dead break out of loop
                     if self.endReload:
                         break
