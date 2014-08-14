@@ -60,7 +60,7 @@ class Level_1(Background):
         #Setup important values
         self.windowSurface = surface
         #Setup Bannanabees Image
-        self.bananaBeesImage = pygame.image.load('files\\Buildings\\BananaBees.gif')
+        self.bananaBeesImage = pygame.image.load('files\\Buildings\\BananaBees.png')
         self.bananaBeesRect = self.bananaBeesImage.get_rect()
         self.bananaBeesRect[0] = 250
         self.bananaBeesRect[1] = 225
